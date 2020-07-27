@@ -1,4 +1,4 @@
-package pl.jaskot.portalfordrivinginstructor.Backend;
+package pl.jaskot.portalfordrivinginstructor.Backend.managers;
 
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Question;
 

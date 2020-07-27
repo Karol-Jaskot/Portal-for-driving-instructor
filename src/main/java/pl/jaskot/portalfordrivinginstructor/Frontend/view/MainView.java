@@ -13,8 +13,11 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
+import org.springframework.beans.factory.annotation.Autowired;
+import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.TestView;
 
+import javax.persistence.Access;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,9 +31,13 @@ import java.util.stream.Stream;
 @Theme(value = Material.class, variant = Material.DARK)
 public class MainView extends AppLayout {
 
+    @Autowired
+    private MainManager mainManager;
+
     private Tabs tabs;
 
-    public MainView(){
+    public MainView(MainManager mainManager){
+        this.mainManager = mainManager;
         Label title = new Label("Portal dla instruktora nauki jazdy");
         addToNavbar(new DrawerToggle(), title);
 
@@ -42,7 +49,7 @@ public class MainView extends AppLayout {
     private void createTabs() {
         Tab tab1 = new Tab("Ogłoszenia");
         Div page1 = new Div();
-        page1.setText("Page#1");
+        page1.add(new ArticleView(mainManager.getArticleManager()));
 
         Tab tab2 = new Tab("Grafik");
         Div page2 = new Div();
@@ -61,13 +68,13 @@ public class MainView extends AppLayout {
 
         Tab tab5 = new Tab("Kontakt");
         Div page5 = new Div();
-        page5.add(new TestView());
+        page5.setText("Page#5");
         page5.setVisible(false);
 
 
         Tab tab6 = new Tab("Ankieta");
         Div page6 = new Div();
-        page6.add(new TestView());
+        page6.setText("Page#6");
         page6.setVisible(false);
 
 
