@@ -1,8 +1,9 @@
-package pl.jaskot.portalfordrivinginstructor.Frontend.view;
+package pl.jaskot.portalfordrivinginstructor.Frontend;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
@@ -15,9 +16,8 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
-import pl.jaskot.portalfordrivinginstructor.Frontend.TestView;
+import pl.jaskot.portalfordrivinginstructor.Frontend.view.*;
 
-import javax.persistence.Access;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 @PWA(name = "MyApp", shortName = "App")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 
+@HtmlImport("styles/shared-styles.html")
 @Theme(value = Material.class, variant = Material.DARK)
 public class MainView extends AppLayout {
 
@@ -53,12 +54,12 @@ public class MainView extends AppLayout {
 
         Tab tab2 = new Tab("Grafik");
         Div page2 = new Div();
-        page2.setText("Page#2");
+        page2.add(new GraphicView());
         page2.setVisible(false);
 
         Tab tab3 = new Tab("Materiały");
         Div page3 = new Div();
-        page3.setText("Page#3");
+        page3.add(new MaterialsView());
         page3.setVisible(false);
 
         Tab tab4 = new Tab("Testy online");
@@ -68,13 +69,13 @@ public class MainView extends AppLayout {
 
         Tab tab5 = new Tab("Kontakt");
         Div page5 = new Div();
-        page5.setText("Page#5");
+        page5.add(new ContactView());
         page5.setVisible(false);
 
 
         Tab tab6 = new Tab("Ankieta");
         Div page6 = new Div();
-        page6.setText("Page#6");
+        page6.add(new QuestionnaireView());
         page6.setVisible(false);
 
 

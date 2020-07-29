@@ -19,5 +19,4 @@ public class Article {
     private String author;
     private String message;
     private Date createTime;
-
 }

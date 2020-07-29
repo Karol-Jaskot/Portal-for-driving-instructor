@@ -1,4 +1,4 @@
-package pl.jaskot.portalfordrivinginstructor.Frontend;
+package pl.jaskot.portalfordrivinginstructor.Frontend.view;
 
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -9,12 +9,9 @@ public class TestView extends VerticalLayout {
     public TestView(){
         setSizeFull();
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        addClassName("test-view");
 
         setTitle();
-
-
-
-
 
     }
 
