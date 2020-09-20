@@ -1,22 +1,19 @@
 package pl.jaskot.portalfordrivinginstructor.Backend.managers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
-import pl.jaskot.portalfordrivinginstructor.Backend.repository.ArticleRepo;
+import pl.jaskot.portalfordrivinginstructor.Backend.repository.ArticlesRepo;
 
-import javax.annotation.ManagedBean;
 import java.util.List;
 
 @Service
-public class ArticleManager {
+public class ArticlesManager {
 
     @Autowired
-    ArticleRepo articleRepo;
+    ArticlesRepo articleRepo;
 
-    public ArticleManager(ArticleRepo articleRepo){
+    public ArticlesManager(ArticlesRepo articleRepo){
         this.articleRepo = articleRepo;
     }
 

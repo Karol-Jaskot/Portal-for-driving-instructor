@@ -9,16 +9,13 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Question {
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String text;
-    private String answerA;
-    private String answerB;
-    private String answerC;
-    private String answerD;
-    private String correctAnswer;
+    private String title;
+    private String linkToFile;
+    private String description;
 
 }

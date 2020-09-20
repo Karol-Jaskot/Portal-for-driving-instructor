@@ -59,7 +59,7 @@ public class MainView extends AppLayout {
 
         Tab tab3 = new Tab("Materiały");
         Div page3 = new Div();
-        page3.add(new MaterialsView());
+        page3.add(new MaterialsView(mainManager.getMaterialsManager()));
         page3.setVisible(false);
 
         Tab tab4 = new Tab("Testy online");

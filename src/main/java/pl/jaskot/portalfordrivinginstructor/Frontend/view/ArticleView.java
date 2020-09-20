@@ -7,22 +7,20 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticleManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 public class ArticleView extends VerticalLayout{
 
     @Autowired
-    ArticleManager articleManager;
+    ArticlesManager articleManager;
     private Accordion accordion;
     private List<Article> articleList;
     private H1 title;
 
-    public ArticleView(ArticleManager articleManager) {
+    public ArticleView(ArticlesManager articleManager) {
         this.articleManager = articleManager;
         setSizeFull();
         setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
