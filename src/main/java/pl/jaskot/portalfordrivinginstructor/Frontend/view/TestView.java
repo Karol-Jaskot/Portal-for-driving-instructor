@@ -6,19 +6,20 @@ import com.vaadin.flow.component.html.H1;
 
 public class TestView extends VerticalLayout {
 
+    private H1 title;
+
     public TestView(){
         setSizeFull();
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         addClassName("test-view");
 
-        setTitle();
-
+        createElements();
+        add(title);
     }
 
-    private void setTitle() {
-        add(new H1("Testy online"));
+    private void createElements() {
+        title = new H1("Testy online");
     }
-
 
 
 }
