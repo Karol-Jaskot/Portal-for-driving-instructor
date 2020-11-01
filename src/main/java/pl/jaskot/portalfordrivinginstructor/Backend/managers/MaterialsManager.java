@@ -25,4 +25,8 @@ public class MaterialsManager {
     public List<Material> getMaterials(){
         return (List<Material>) materialsRepo.findAll();
     }
+
+    public void deleteMaterial(Material material) {
+        materialsRepo.delete(material);
+    }
 }

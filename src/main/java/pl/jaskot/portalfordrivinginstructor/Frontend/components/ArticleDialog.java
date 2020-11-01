@@ -31,7 +31,6 @@ public class ArticleDialog extends Dialog {
     }
 
     private void createContent() {
-
         author = "Admin";
 
         articleTitle = new TextField("Tytuł");
@@ -47,22 +46,6 @@ public class ArticleDialog extends Dialog {
     }
 
     private void createArticle() {
-        Article article = new Article();
-        article.setTitle(articleTitle.getValue());
-        article.setMessage(articleDescription.getValue());
-        article.setAuthor(author);
-        article.setCreateTime(java.util.Calendar.getInstance().getTime());
-        articleManager.addArticle(article);
-    }
-
-    private void putSomeData() {
-        Article a1 = new Article();
-        a1.setTitle("Wieści");
-        a1.setMessage("Treść i info");
-        a1.setAuthor("Stefan");
-        a1.setCreateTime(java.util.Calendar.getInstance().getTime());
-        articleManager.addArticle(a1);
-
         Article article = new Article();
         article.setTitle(articleTitle.getValue());
         article.setMessage(articleDescription.getValue());
