@@ -78,6 +78,10 @@ public class MainView extends AppLayout {
         page6.add(new QuestionnaireView());
         page6.setVisible(false);
 
+        Tab tab7 = new Tab("Zarządzanie");
+        Div page7 = new Div();
+        page7.add(new ManagerView(mainManager));
+        page7.setVisible(false);
 
         Map<Tab, Component> tabsToPages = new HashMap<>();
         tabsToPages.put(tab1, page1);
@@ -86,9 +90,10 @@ public class MainView extends AppLayout {
         tabsToPages.put(tab4, page4);
         tabsToPages.put(tab5, page5);
         tabsToPages.put(tab6, page6);
+        tabsToPages.put(tab7, page7);
 
-        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5, tab6);
-        Div pages = new Div(page1, page2, page3, page4,page5, page6);
+        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5, tab6, tab7);
+        Div pages = new Div(page1, page2, page3, page4,page5, page6, page7);
         Set<Component> pagesShown = Stream.of(page1)
                 .collect(Collectors.toSet());
 

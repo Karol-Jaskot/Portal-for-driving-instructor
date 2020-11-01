@@ -1,6 +1,7 @@
 package pl.jaskot.portalfordrivinginstructor.Frontend.view;
 
 import com.vaadin.flow.component.accordion.Accordion;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -8,6 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
+import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class ArticleView extends VerticalLayout{
     private Accordion accordion;
     private List<Article> articleList;
     private H1 title;
+    private Button addArticleButton;
 
     public ArticleView(ArticlesManager articleManager) {
         this.articleManager = articleManager;
@@ -26,10 +29,10 @@ public class ArticleView extends VerticalLayout{
         setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         addClassName("article-view");
 
-        //putSomeData();
-        createElements();
+        putSomeData();
+        createContent();
         setArticleToGrid();
-        add(title ,accordion);
+        add(title , addArticleButton ,accordion);
     }
 
     private void putSomeData() {
@@ -49,13 +52,15 @@ public class ArticleView extends VerticalLayout{
             thisArticle.add(
                     new Label(article.getMessage()),
                     new Label(article.getCreateTime().toString()),
-                    new Label(article.getAuthor())
-            );
+                    new Label(article.getAuthor()),
+                    new Button("Usuń wiadomość", event -> {
+                articleManager.deleteArticle(article);
+            }));
             accordion.add(article.getTitle(),  thisArticle);
         }
     }
 
-    private void createElements() {
+    private void createContent() {
         accordion = new Accordion();
         accordion.setWidthFull();
 
@@ -64,6 +69,10 @@ public class ArticleView extends VerticalLayout{
 
         title = new H1("Nowe ogłoszenia");
         title.getElement().getThemeList().add("dark");
+
+        addArticleButton = new Button("Dodaj wiadomość", event -> {
+            ArticleDialog articleDialog = new ArticleDialog(articleManager);
+            articleDialog.open();});
     }
 }
 

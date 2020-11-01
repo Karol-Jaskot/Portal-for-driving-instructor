@@ -28,7 +28,7 @@ public class MaterialsView extends VerticalLayout {
 
         title = new H1("Lista materiałów");
 
-        //putSomeData();
+        putSomeData();
         createElements();
         setMaterialsToGrid();
         add(title, accordion);

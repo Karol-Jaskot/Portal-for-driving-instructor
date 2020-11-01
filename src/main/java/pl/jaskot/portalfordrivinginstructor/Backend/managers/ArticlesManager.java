@@ -25,4 +25,8 @@ public class ArticlesManager {
         return (List<Article>) articleRepo.findAll();
     }
 
+    public void deleteArticle(Article article){
+        articleRepo.delete(article);
+    }
+
 }
