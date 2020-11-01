@@ -75,8 +75,5 @@ public class MaterialsView extends VerticalLayout {
                 }));
             accordion.add(material.getTitle(),  thisMaterial);
         }
-
-
-
     }
 }
