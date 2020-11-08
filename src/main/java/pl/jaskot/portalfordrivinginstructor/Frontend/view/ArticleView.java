@@ -7,6 +7,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
@@ -17,14 +18,17 @@ import java.util.List;
 public class ArticleView extends VerticalLayout{
 
     @Autowired
-    ArticlesManager articleManager;
+    private MainManager mainManager;
+    private ArticlesManager articleManager;
+
     private Accordion accordion;
     private List<Article> articleList;
     private H1 title;
     private Button addArticleButton;
 
-    public ArticleView(ArticlesManager articleManager) {
-        this.articleManager = articleManager;
+    public ArticleView(MainManager mainManager) {
+        this.mainManager = mainManager;
+        this.articleManager = mainManager.getArticleManager();
         setSizeFull();
         setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         addClassName("article-view");
@@ -32,7 +36,12 @@ public class ArticleView extends VerticalLayout{
         putSomeData();
         createContent();
         setArticleToGrid();
-        add(title , addArticleButton ,accordion);
+
+        add(title);
+        if(mainManager.isAdmin()){
+            add(addArticleButton);
+        }
+        add(accordion);
     }
 
     private void putSomeData() {
@@ -52,10 +61,12 @@ public class ArticleView extends VerticalLayout{
             thisArticle.add(
                     new Label(article.getMessage()),
                     new Label(article.getCreateTime().toString()),
-                    new Label(article.getAuthor()),
-                    new Button("Usuń wiadomość", event -> {
-                articleManager.deleteArticle(article);
-            }));
+                    new Label(article.getAuthor())
+            );
+            if(mainManager.isAdmin()){
+                thisArticle.add(new Button("Usuń wiadomość",
+                        event -> { articleManager.deleteArticle(article); }));
+            };
             accordion.add(article.getTitle(),  thisArticle);
         }
     }

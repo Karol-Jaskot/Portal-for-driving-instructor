@@ -37,6 +37,7 @@ public class MainView extends AppLayout {
     @Autowired
     private MainManager mainManager;
 
+
     private Tabs tabs;
 
     public MainView(MainManager mainManager) throws FileNotFoundException {
@@ -51,7 +52,7 @@ public class MainView extends AppLayout {
     private void createTabs() throws FileNotFoundException {
         Tab tab1 = new Tab("Ogłoszenia");
         Div page1 = new Div();
-        page1.add(new ArticleView(mainManager.getArticleManager()));
+        page1.add(new ArticleView(mainManager));
 
         Tab tab2 = new Tab("Grafik");
         Div page2 = new Div();
@@ -60,7 +61,7 @@ public class MainView extends AppLayout {
 
         Tab tab3 = new Tab("Materiały");
         Div page3 = new Div();
-        page3.add(new MaterialsView(mainManager.getMaterialsManager()));
+        page3.add(new MaterialsView(mainManager));
         page3.setVisible(false);
 
         Tab tab4 = new Tab("Testy online");
@@ -79,7 +80,7 @@ public class MainView extends AppLayout {
         page6.add(new QuestionnaireView());
         page6.setVisible(false);
 
-        Tab tab7 = new Tab("Zarządzanie");
+        Tab tab7 = new Tab("Ustawienia");
         Div page7 = new Div();
         page7.add(new ManagerView(mainManager));
         page7.setVisible(false);

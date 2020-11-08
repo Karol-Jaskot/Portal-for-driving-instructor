@@ -9,14 +9,17 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Material {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String title;
-    private String linkToFile;
-    private String description;
-    private boolean isPublic = false;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String password;
+    private boolean isAdmin;
+
 
 }

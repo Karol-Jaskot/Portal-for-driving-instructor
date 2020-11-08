@@ -10,7 +10,6 @@ import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 
 public class ArticleDialog extends Dialog {
 
-    @Autowired
     ArticlesManager articleManager;
 
     private Button confirmButton;
