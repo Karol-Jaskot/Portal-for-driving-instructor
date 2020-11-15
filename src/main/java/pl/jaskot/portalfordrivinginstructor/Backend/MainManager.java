@@ -2,10 +2,7 @@ package pl.jaskot.portalfordrivinginstructor.Backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.MaterialsManager;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.QuestionsManager;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.UsersManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.managers.*;
 
 @Service
 public class MainManager {
@@ -19,14 +16,22 @@ public class MainManager {
     @Autowired
     MaterialsManager materialsManager;
 
+    HoursManager hoursManager;
+
+    DaysManager daysManager;
+
     @Autowired
     UsersManager usersManager;
 
-    public MainManager(ArticlesManager articleManager, QuestionsManager questionsManager, MaterialsManager materialsManager, UsersManager usersManager) {
+    public MainManager(ArticlesManager articleManager, QuestionsManager questionsManager, MaterialsManager materialsManager, UsersManager usersManager, HoursManager hoursManager, DaysManager daysManager) {
         this.articleManager = articleManager;
         this.questionsManager = questionsManager;
         this.materialsManager = materialsManager;
         this.usersManager = usersManager;
+        this.hoursManager = hoursManager;
+        this.daysManager = daysManager;
+        daysManager.hoursManager = hoursManager;
+
     }
 
     public ArticlesManager getArticleManager() {
@@ -38,6 +43,10 @@ public class MainManager {
     public MaterialsManager getMaterialsManager(){return materialsManager;}
 
     public UsersManager getUsersManager(){return usersManager;}
+
+    public HoursManager getHourManager(){return hoursManager;}
+
+    public DaysManager getDaysManager(){return daysManager;}
 
     public boolean isAdmin(){
         return usersManager.isAdmin();

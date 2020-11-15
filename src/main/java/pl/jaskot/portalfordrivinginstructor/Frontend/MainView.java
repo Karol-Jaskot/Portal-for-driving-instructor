@@ -20,9 +20,7 @@ import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionList;
 import pl.jaskot.portalfordrivinginstructor.Frontend.view.*;
 
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,6 +43,7 @@ public class MainView extends AppLayout {
         Label title = new Label("Portal dla instruktora nauki jazdy");
         addToNavbar(new DrawerToggle(), title);
 
+
         createTabs();
         addToDrawer(createImage() ,tabs);
     }
@@ -56,7 +55,7 @@ public class MainView extends AppLayout {
 
         Tab tab2 = new Tab("Grafik");
         Div page2 = new Div();
-        page2.add(new GraphicView());
+        page2.add(new GraphicView(mainManager));
         page2.setVisible(false);
 
         Tab tab3 = new Tab("Materiały");
