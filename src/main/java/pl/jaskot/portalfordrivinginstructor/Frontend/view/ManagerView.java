@@ -16,6 +16,9 @@ import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.UsersManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.RegistrationDialog;
+import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminQuestionareView;
+import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminSettingsView;
+import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.UsersListView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,16 +71,17 @@ public class ManagerView extends VerticalLayout {
 
         settings = new Tab("Ustawienia");
         page1 = new Div();
-        page1.setText("Page#1");
+        page1.add(new AdminSettingsView(mainManager));
 
          users = new Tab("Użytkownicy");
          page2 = new Div();
-        page2.setText("Page#2");
+        page2.add(new UsersListView(mainManager));
+        page2.setSizeFull();
         page2.setVisible(false);
 
          questionares = new Tab("Ankiety");
          page3 = new Div();
-        page3.setText("Page#3");
+        page3.add(new AdminQuestionareView(mainManager));
         page3.setVisible(false);
 
         Map<Tab, Component> tabsToPages = new HashMap<>();
@@ -92,17 +96,6 @@ public class ManagerView extends VerticalLayout {
             Component selectedPage = tabsToPages.get(tabs.getSelectedTab());
             selectedPage.setVisible(true);
         });
-        tabs.setSizeFull();
-        tabs.setFlexGrowForEnclosedTabs(1);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -110,7 +103,8 @@ public class ManagerView extends VerticalLayout {
 
     private void setAdminPage(){
         add(tabs, pages);
-
+        tabs.setSizeFull();
+        pages.setSizeFull();
         //settings.add(registration);
     }
 

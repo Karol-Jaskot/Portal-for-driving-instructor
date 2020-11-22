@@ -14,6 +14,8 @@ import pl.jaskot.portalfordrivinginstructor.Backend.managers.MaterialsManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.MaterialDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MaterialsView extends VerticalLayout {
@@ -51,6 +53,7 @@ public class MaterialsView extends VerticalLayout {
         a1.setTitle("Książka 1");
         a1.setDescription("Treść i info");
         a1.setLinkToFile("https://vaadin.com/components/vaadin-anchor");
+        a1.setPublic(true);
         materialsManager.addMaterial(a1);
     }
 
@@ -74,17 +77,27 @@ public class MaterialsView extends VerticalLayout {
 
     private void setMaterialsToGrid() {
         for(Material material: materials){
-            VerticalLayout thisMaterial = new VerticalLayout();
-            thisMaterial.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-            thisMaterial.add(
-                    new Label(material.getDescription()),
-                    new Anchor(material.getLinkToFile(),material.getLinkToFile())
-                );
-            if(mainManager.isAdmin()){
-                thisMaterial.add(new Button("Usuń materiał",
-                        event -> { materialsManager.deleteMaterial(material); }));
-            };
-            accordion.add(material.getTitle(),  thisMaterial);
+            if(material.isPublic()){
+                createMaterial(material);
+            }else {
+                if(mainManager.isActive()){
+                    createMaterial(material);
+                }
+            }
         }
+    }
+
+    private void createMaterial(Material material){
+        VerticalLayout thisMaterial = new VerticalLayout();
+        thisMaterial.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        thisMaterial.add(
+                new Label(material.getDescription()),
+                new Anchor(material.getLinkToFile(),material.getLinkToFile())
+        );
+        if(mainManager.isAdmin()){
+            thisMaterial.add(new Button("Usuń materiał",
+                    event -> { materialsManager.deleteMaterial(material); }));
+        };
+        accordion.add(material.getTitle(),  thisMaterial);
     }
 }

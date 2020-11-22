@@ -13,6 +13,8 @@ import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ArticleView extends VerticalLayout{
@@ -49,6 +51,7 @@ public class ArticleView extends VerticalLayout{
         a1.setTitle("Wieści");
         a1.setMessage("Treść i info");
         a1.setAuthor("Stefan");
+        a1.setPublic(true);
         a1.setCreateTime(java.util.Calendar.getInstance().getTime());
 
         articleManager.addArticle(a1);
@@ -56,19 +59,30 @@ public class ArticleView extends VerticalLayout{
 
     private void setArticleToGrid() {
         for(Article article: articleList){
-            VerticalLayout thisArticle = new VerticalLayout();
-            thisArticle.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-            thisArticle.add(
-                    new Label(article.getMessage()),
-                    new Label(article.getCreateTime().toString()),
-                    new Label(article.getAuthor())
-            );
-            if(mainManager.isAdmin()){
-                thisArticle.add(new Button("Usuń wiadomość",
-                        event -> { articleManager.deleteArticle(article); }));
-            };
-            accordion.add(article.getTitle(),  thisArticle);
+            if(article.isPublic()){
+                createArticle(article);
+            }else {
+                if(mainManager.isActive()){
+                    createArticle(article);
+                }
+            }
+
         }
+    }
+
+    private void createArticle(Article article){
+        VerticalLayout thisArticle = new VerticalLayout();
+        thisArticle.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        thisArticle.add(
+                new Label(article.getMessage()),
+                new Label(article.getCreateTime().toString()),
+                new Label(article.getAuthor())
+        );
+        if(mainManager.isAdmin()){
+            thisArticle.add(new Button("Usuń wiadomość",
+                    event -> { articleManager.deleteArticle(article); }));
+        };
+        accordion.add(article.getTitle(),  thisArticle);
     }
 
     private void createContent() {
@@ -77,6 +91,7 @@ public class ArticleView extends VerticalLayout{
 
         articleList = new ArrayList();
         articleList.addAll(articleManager.getArticles());
+        Collections.sort(articleList, (o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
 
         title = new H1("Nowe ogłoszenia");
         title.getElement().getThemeList().add("dark");
