@@ -1,23 +1,9 @@
 ### BUILD image
 
+# mvn clean package
+
 FROM maven:3.6.3-jdk-14 as builder
-
-# create app folder for sources
-
-RUN mkdir -p /build
-
-WORKDIR /build
-
-COPY pom.xml /build
-
-#Download all required dependencies into one layer
-
-RUN mvn -B dependency:resolve dependency:resolve-plugins
-
-#Copy source code
-
-COPY src /build/src
-
-# Build application
-
-RUN mvn package
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/application.jar"]
