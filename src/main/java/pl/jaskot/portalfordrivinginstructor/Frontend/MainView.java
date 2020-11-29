@@ -76,7 +76,7 @@ public class MainView extends AppLayout {
 
         Tab tab6 = new Tab("Ankieta");
         Div page6 = new Div();
-        page6.add(new QuestionnaireView());
+        page6.add(new QuestionnaireView(mainManager));
         page6.setVisible(false);
 
         Tab tab7 = new Tab("Ustawienia");

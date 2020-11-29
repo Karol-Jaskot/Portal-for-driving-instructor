@@ -13,10 +13,12 @@ public class QuestionList {
 
     public QuestionList() throws FileNotFoundException {
         records = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File("files/pytania.csv"));) {
+         try (Scanner scanner = new Scanner(new File("files/pytania.csv"));) {
             while (scanner.hasNextLine()) {
                 records.add(getRecordFromLine(scanner.nextLine()));
             }
+        }catch (Exception e){
+
         }
 
 
