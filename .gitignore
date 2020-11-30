@@ -30,7 +30,6 @@ build/
 ### VS Code ###
 .vscode/
 
-save/Data.mv.db
-save/Data.mv.db
+save/
 .mvn/
 node_modules/
