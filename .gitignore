@@ -32,3 +32,5 @@ build/
 
 save/Data.mv.db
 save/Data.mv.db
+.mvn/
+node_modules/
