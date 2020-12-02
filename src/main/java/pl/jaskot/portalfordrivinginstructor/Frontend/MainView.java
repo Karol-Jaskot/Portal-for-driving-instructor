@@ -16,7 +16,6 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
-import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionList;
 import pl.jaskot.portalfordrivinginstructor.Frontend.view.*;
 
 import java.io.FileNotFoundException;
@@ -35,14 +34,11 @@ public class MainView extends AppLayout {
     @Autowired
     private MainManager mainManager;
 
-
     private Tabs tabs;
 
     public MainView(MainManager mainManager) throws FileNotFoundException {
         this.mainManager = mainManager;
-        Label title = new Label("Portal dla instruktora nauki jazdy");
-        addToNavbar(new DrawerToggle(), title);
-
+        addToNavbar(new DrawerToggle(),  new Label("Portal dla instruktora nauki jazdy"));
 
         createTabs();
         addToDrawer(createImage() ,tabs);
@@ -65,7 +61,7 @@ public class MainView extends AppLayout {
 
         Tab tab4 = new Tab("Testy online");
         Div page4 = new Div();
-        page4.add(new TestView());
+        page4.add(new TestView(mainManager));
         page4.setVisible(false);
 
         Tab tab5 = new Tab("Kontakt");

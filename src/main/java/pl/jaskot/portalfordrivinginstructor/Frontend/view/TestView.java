@@ -7,6 +7,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
+import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionList;
 
 import java.io.FileNotFoundException;
@@ -25,14 +26,18 @@ public class TestView extends VerticalLayout {
     private Label scoreLabel;
     private String answer;
     private int score;
+    private boolean isUser;
+    private MainManager mainManager;
+    private int userQuest = 1;
 
     private H1 title;
 
-    public TestView() throws FileNotFoundException {
+    public TestView(MainManager mainManager) throws FileNotFoundException {
         setSizeFull();
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         addClassName("test-view");
 
+        isUser = mainManager.isActive();
         createContent();
         add(title,startExam, examView);
     }
@@ -43,6 +48,7 @@ public class TestView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         int random = new Random().nextInt(questions.size() - 1);
         question = questions.get(random);
+        questions.remove(random);
 
         H2 questionText = new H2(question.get(1));
 
@@ -54,8 +60,11 @@ public class TestView extends VerticalLayout {
                 answer= event.getValue();
             }
         });
-
-        scoreLabel.setText("Wynik: "+score);
+        if(isUser){
+            scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score);
+        }else {
+            scoreLabel.setText("Wynik: "+score);
+        }
         examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
     }
 
@@ -77,6 +86,10 @@ public class TestView extends VerticalLayout {
     }
 
     private void checkQuestion(){
+        if(radioGroup.isEmpty()){
+            return;
+        }
+
         boolean index = question.get(5).contains("A");
         if(index){
             if(question.get(2) == answer)
@@ -96,6 +109,9 @@ public class TestView extends VerticalLayout {
             index = false;
         }
 
+        if(isUser){
+            userQuest++;
+        }
         createExamView();
     }
 
