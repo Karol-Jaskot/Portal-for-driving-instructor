@@ -16,22 +16,18 @@ public class MainManager {
     @Autowired
     MaterialsManager materialsManager;
 
-    HoursManager hoursManager;
-
-    DaysManager daysManager;
+    @Autowired
+    CalendarManager calendarManager;
 
     @Autowired
     UsersManager usersManager;
 
-    public MainManager(ArticlesManager articleManager, QuestionsManager questionsManager, MaterialsManager materialsManager, UsersManager usersManager, HoursManager hoursManager, DaysManager daysManager) {
+    public MainManager(ArticlesManager articleManager, QuestionsManager questionsManager, MaterialsManager materialsManager, UsersManager usersManager,CalendarManager calendarManager) {
         this.articleManager = articleManager;
         this.questionsManager = questionsManager;
         this.materialsManager = materialsManager;
         this.usersManager = usersManager;
-        this.hoursManager = hoursManager;
-        this.daysManager = daysManager;
-        daysManager.hoursManager = hoursManager;
-
+        this.calendarManager = calendarManager;
     }
 
     public ArticlesManager getArticleManager() {
@@ -44,9 +40,7 @@ public class MainManager {
 
     public UsersManager getUsersManager(){return usersManager;}
 
-    public HoursManager getHourManager(){return hoursManager;}
-
-    public DaysManager getDaysManager(){return daysManager;}
+    public CalendarManager getCalendarManager(){return calendarManager;}
 
     public boolean isAdmin(){
         return usersManager.isAdmin();

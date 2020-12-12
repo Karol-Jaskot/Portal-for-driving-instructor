@@ -7,10 +7,12 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
-import pl.jaskot.portalfordrivinginstructor.Backend.entity.Day;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.DaysManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.MyDay;
+import pl.jaskot.portalfordrivinginstructor.Backend.managers.CalendarManager;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class GraphicView extends VerticalLayout {
 
@@ -18,19 +20,20 @@ public class GraphicView extends VerticalLayout {
     private Label subTitle;
     private DatePicker valueDatePicker;
     private HorizontalLayout dataLayout;
-
-    private DaysManager daysManager;
-    private Day choiceDay;
+    private MainManager mainManager;
+    private CalendarManager calendarManager;
+    private MyDay myDay;
+    private LocalDate choiceTime;
 
     public GraphicView(MainManager mainManager) {
-        this.daysManager = mainManager.getDaysManager();
-
         setSizeFull();
         setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         addClassName("graphic-view");
+        this.mainManager = mainManager;
+        calendarManager = mainManager.getCalendarManager();
 
         createContent();
-        add(title, dataLayout,message);
+        add(title, dataLayout,message, subTitle);
     }
 
     private void createContent() {
@@ -39,33 +42,59 @@ public class GraphicView extends VerticalLayout {
         message = new H1("Wiadomość");
 
         valueDatePicker = new DatePicker();
-
         LocalDate nowTime = LocalDate.now();
-
         valueDatePicker.setValue(nowTime);
+        subTitle = new Label();
+
+        if(mainManager.isActive()){
+            subTitle = new Label("Proszę wybrać datę");
+            choiceTime = valueDatePicker.getValue();
+            checkDayOfWeek();
+
+            valueDatePicker.addValueChangeListener(event -> {
+                choiceTime = valueDatePicker.getValue();
+                if (event.getValue() == null) {
+                    subTitle.setText("Brak wybranej daty");
+                } else {
+                    checkDayOfWeek();
+                }
+            });
+        }else {
+            subTitle.setText("Grafik dostępny tylko dla dla osób zalogowanych");
+        }
 
 
-        subTitle = new Label("Wybrana data: ");
-        valueDatePicker.addValueChangeListener(event -> {
-            if (event.getValue() == null) {
-                subTitle.setText("Brak wybranej daty");
-            } else {
-                subTitle.setText("Wybrana data: " );
 
-                LocalDate choiceTime = valueDatePicker.getValue();
-                int year = choiceTime.getYear();
-                int month = choiceTime.getMonthValue();
-                int day = choiceTime.getDayOfMonth();
-                choiceDay = daysManager.getDayByDate(year,month,day);
 
-                message.setText("Wybrany dzień: "+choiceDay.getDate() +"Start pracy: "+choiceDay.getMinHour()+" Koniec pracy: "+choiceDay.getMaxHour());
-            }
-        });
 
         dataLayout = new HorizontalLayout();
         dataLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
         dataLayout.add(subTitle, valueDatePicker);
     }
 
+    private void checkDayOfWeek() {
+        if (choiceTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            setDayInfo(1);
+        } else if(choiceTime.getDayOfWeek() == DayOfWeek.SATURDAY){
+            if (calendarManager.getWorkingSaturday()) {
+                setDayInfo(3);
+            }else {
+                setDayInfo(2);
+            }
+        }else {
+            setDayInfo(3);
+        }
+    }
+
+    private void setDayInfo(int i) {
+        if(i == 1){
+            subTitle.setText("Niedziela to dzień wolny od pracy");
+        } else if(i==2){
+            subTitle.setText("Instruktor ustawił soboty jako dni wolne od pracy");
+        } else if(i==3){
+            myDay = calendarManager.getMyDay(choiceTime);
+            subTitle.setText("Wybrana data: " +myDay.getMyDate()+"  Godzina rozpoczęcia: "+myDay.getStartHour()+"  Godzina zakończenia: "+myDay.getEndHour());
+        }
+    }
 
 }
