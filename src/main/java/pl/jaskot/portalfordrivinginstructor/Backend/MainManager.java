@@ -49,4 +49,6 @@ public class MainManager {
     public boolean isActive(){
         return usersManager.isActive();
     }
+
+    public Long getUserId(){ return usersManager.getMainUser().getId(); }
 }

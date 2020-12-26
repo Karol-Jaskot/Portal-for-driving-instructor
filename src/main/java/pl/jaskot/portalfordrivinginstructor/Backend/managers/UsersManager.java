@@ -39,6 +39,10 @@ public class UsersManager {
         mainUser = null;
     }
 
+    public User getMainUser(){
+        return mainUser;
+    }
+
     public boolean isAdmin(){
         if(mainUser == null){
             return false;

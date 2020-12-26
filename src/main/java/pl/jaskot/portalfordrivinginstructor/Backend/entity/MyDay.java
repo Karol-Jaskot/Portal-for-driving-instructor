@@ -17,8 +17,6 @@ public class MyDay {
     private int startHour, endHour;
     @ElementCollection
     private List<Integer> closeHour;
-    @ElementCollection
-    private List<Integer> breakHour;
     @OneToMany
     private List<Lesson> lessons;
 

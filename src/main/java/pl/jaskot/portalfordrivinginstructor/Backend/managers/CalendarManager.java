@@ -2,23 +2,29 @@ package pl.jaskot.portalfordrivinginstructor.Backend.managers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.jaskot.portalfordrivinginstructor.Backend.configuration.AppSettings;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.Lesson;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.MyDay;
+import pl.jaskot.portalfordrivinginstructor.Backend.repository.LessonRepo;
 import pl.jaskot.portalfordrivinginstructor.Backend.repository.MyDayRepo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 public class CalendarManager {
 
-    private static int  startHour = 0, endHour = 23;
-    private static boolean workingSaturday;
-
     @Autowired
     private MyDayRepo myDayRepo;
 
-    public CalendarManager(MyDayRepo myDayRepo){
+    @Autowired
+    private LessonRepo lessonRepo;
+
+    public CalendarManager(MyDayRepo myDayRepo, LessonRepo lessonRepo){
         this.myDayRepo = myDayRepo;
+        this.lessonRepo = lessonRepo;
     }
 
     public MyDay getMyDay(LocalDate date){
@@ -34,9 +40,23 @@ public class CalendarManager {
 
     private MyDay createNewDay(LocalDate date) {
         MyDay myDay = new MyDay();
-        myDay.setStartHour(startHour);
-        myDay.setEndHour(endHour);
+        myDay.setStartHour(AppSettings.getStartHour());
+        myDay.setEndHour(AppSettings.getEndHour());
         myDay.setMyDate(date);
+
+        List<Lesson> lessons = new ArrayList<>();
+        for(int i = AppSettings.getStartHour(); i<AppSettings.getEndHour();i++){
+            Lesson lesson = new Lesson();
+            lesson.setHour(i);
+            boolean blocked = false;
+            if (AppSettings.getCloseHour().contains(i)){
+                blocked = true;
+            }
+            lesson.setBlocked(blocked);
+            lessonRepo.save(lesson);
+            lessons.add(lesson);
+        }
+        myDay.setLessons(lessons);
         myDayRepo.save(myDay);
         return myDay;
     }
@@ -45,6 +65,6 @@ public class CalendarManager {
         myDayRepo.save(myDay);
     }
 
-    public boolean getWorkingSaturday(){return workingSaturday;}
+    public boolean getWorkingSaturday(){return AppSettings.isWorkingSaturday();}
 
 }
