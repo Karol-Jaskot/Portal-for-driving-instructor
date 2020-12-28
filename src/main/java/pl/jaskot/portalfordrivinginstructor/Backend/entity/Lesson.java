@@ -1,6 +1,7 @@
 package pl.jaskot.portalfordrivinginstructor.Backend.entity;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Lesson {
     private long id;
     private int hour;
     private long userId;
-    private boolean isBlocked;
+    private boolean isBlocked = false;
+    private boolean isReserved = false;
 
 }

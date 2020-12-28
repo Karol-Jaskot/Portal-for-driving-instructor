@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
 
 @Repository
-public interface UsersRepo extends CrudRepository<User, Long> {}
+public interface UsersRepo extends CrudRepository<User, Long> {
+}

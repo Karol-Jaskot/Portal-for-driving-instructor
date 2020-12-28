@@ -43,16 +43,18 @@ public class CalendarManager {
         myDay.setStartHour(AppSettings.getStartHour());
         myDay.setEndHour(AppSettings.getEndHour());
         myDay.setMyDate(date);
+        myDay.setCloseHour(AppSettings.getCloseHour());
 
         List<Lesson> lessons = new ArrayList<>();
         for(int i = AppSettings.getStartHour(); i<AppSettings.getEndHour();i++){
             Lesson lesson = new Lesson();
             lesson.setHour(i);
             boolean blocked = false;
-            if (AppSettings.getCloseHour().contains(i)){
+            if (AppSettings.checkCloseHour(i)){
                 blocked = true;
             }
             lesson.setBlocked(blocked);
+            lesson.setReserved(false);
             lessonRepo.save(lesson);
             lessons.add(lesson);
         }
@@ -64,6 +66,8 @@ public class CalendarManager {
     public void updateMyDay(MyDay myDay){
         myDayRepo.save(myDay);
     }
+
+    public void updateLesson(Lesson lesson){lessonRepo.save(lesson);}
 
     public boolean getWorkingSaturday(){return AppSettings.isWorkingSaturday();}
 

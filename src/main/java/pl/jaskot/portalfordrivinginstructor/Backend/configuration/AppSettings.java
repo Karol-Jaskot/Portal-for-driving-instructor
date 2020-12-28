@@ -8,8 +8,11 @@ import java.util.List;
 @Data
 public class AppSettings {
 
+    private static int reservationLimit = 4;
     private static int  startHour = 8, endHour = 16;
-    private static List<Integer> closeHour =closeHour = new ArrayList<>(10);
+    private static List<Integer> closeHour = new ArrayList<Integer>() {{
+        add(10);
+    }};
     private static boolean workingSaturday;
     private static int usersLessonHours = 2;
 
@@ -20,4 +23,10 @@ public class AppSettings {
     public static boolean isWorkingSaturday() { return workingSaturday; }
 
     public static List<Integer> getCloseHour() { return closeHour; }
+
+    public static boolean checkCloseHour(int i){
+        return closeHour.contains(i);
+    }
+
+    public static int getReservationLimit(){return reservationLimit;}
 }
