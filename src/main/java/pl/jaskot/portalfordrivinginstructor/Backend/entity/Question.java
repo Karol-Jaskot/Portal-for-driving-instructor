@@ -18,7 +18,8 @@ public class Question {
     private String answerA;
     private String answerB;
     private String answerC;
-    private String answerD;
     private String correctAnswer;
+    private boolean specialist;
+    private int value;
 
 }

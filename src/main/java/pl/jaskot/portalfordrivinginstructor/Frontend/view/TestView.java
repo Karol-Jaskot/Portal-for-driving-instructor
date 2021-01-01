@@ -8,6 +8,7 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.Question;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionList;
 
 import java.io.FileNotFoundException;
@@ -21,14 +22,15 @@ public class TestView extends VerticalLayout {
     private List<String> question;
     private List<List<String>> questions;
     private RadioButtonGroup<String> radioGroup;
-    private Button startExam;
+    private Button startLesson, startExam;
     private Button nextQuestion;
     private Label scoreLabel;
     private String answer;
     private int score;
-    private boolean isUser;
+    private boolean isUser, isExam;
     private MainManager mainManager;
     private int userQuest = 1;
+    private int examQuestNumber = 32, examQuestNumberNow = 0;
 
     private H1 title;
 
@@ -38,14 +40,13 @@ public class TestView extends VerticalLayout {
         addClassName("test-view");
 
         isUser = mainManager.isActive();
+        isExam = true;
         createContent();
-        add(title,startExam, examView);
+        add(title, startLesson , startExam, examView);
     }
 
-    private void createExamView() {
-        startExam.setText("Zacznij od nowa");
-        examView.removeAll();
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+    private void createLessonView() {
+        cleanPage();
         int random = new Random().nextInt(questions.size() - 1);
         question = questions.get(random);
         questions.remove(random);
@@ -60,29 +61,80 @@ public class TestView extends VerticalLayout {
                 answer= event.getValue();
             }
         });
-        if(isUser){
-            scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score);
-        }else {
-            scoreLabel.setText("Wynik: "+score);
-        }
+        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score);
         examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
+    }
+
+    private void cleanPage(){
+        if(isExam){
+            startExam.setText("Rozpocznij egzamin od nowa");
+        }else {
+            startLesson.setText("Rozpocznij tryb nauki od nowa");
+        }
+        examView.removeAll();
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+    }
+
+    private void createExamView() {
+        cleanPage();
+
+        // pobranie pytania
+        question = questions.get(examQuestNumberNow);
+        examQuestNumberNow++;
+
+        // ustawienie pytań
+        H2 questionText = new H2(question.get(1));
+        radioGroup = new RadioButtonGroup<>();
+        radioGroup.setItems(question.get(2), question.get(3), question.get(4));
+        radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+        radioGroup.addValueChangeListener(event -> {
+            if (event.getValue() != null) {
+                answer= event.getValue();
+            }
+        });
+        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score);
+        examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
+    }
+
+    private void resetSettings() throws FileNotFoundException {
+        score = 0;
+        examQuestNumber = 32;
+        userQuest = 1;
+        if(isExam){
+            startLesson.setText("Zacznij tryb nauki");
+            questions = questionList.getQuestionsForExam();
+        }else {
+            startExam.setText("Zacznij egzamin");
+            questions = questionList.getQuestions();
+        }
     }
 
     private void createContent() throws FileNotFoundException {
         questionList = new QuestionList();
-        questions = questionList.getQuestions();
         scoreLabel = new Label("Wynik: -");
 
         nextQuestion = new Button("Następne pytanie", event -> checkQuestion());
 
         examView = new VerticalLayout();
-        startExam = new Button("Zacznij egzamin", event -> {
-            score = 0;
-            createExamView();
+        title = new H1("Testy online");
+
+        startLesson = new Button("Zacznij tryb nauki", event -> {
+            isExam = false;
+            try {
+                resetSettings();
+            } catch (FileNotFoundException e) {}
+            title.setText("Testy online - tryb swobodnej nauki");
+            createLessonView();
         }) ;
 
-
-        title = new H1("Egzamin");
+        startExam = new Button("Zacznij egzamin", event -> {
+            isExam = true;
+            try {
+                resetSettings();
+            } catch (FileNotFoundException e) {}
+            title.setText("Testy online - egzamin");
+            createLessonView();
+        }) ;
     }
 
     private void checkQuestion(){
@@ -93,26 +145,36 @@ public class TestView extends VerticalLayout {
         boolean index = question.get(5).contains("A");
         if(index){
             if(question.get(2) == answer)
-                score++;
+                addScore();
             index = false;
         }
         index = question.get(5).contains("B");
         if(index){
             if(question.get(3) == answer)
-                score++;
+                addScore();
             index = false;
         }
         index = question.get(5).contains("C");
         if(index){
            if(question.get(4) == answer)
-                score++;
+               addScore();
             index = false;
         }
 
-        if(isUser){
-            userQuest++;
+        userQuest++;
+        if(isExam){
+            createExamView();
+        } else {
+            createLessonView();
         }
-        createExamView();
+    }
+
+    private void addScore(){
+        if(isExam){
+            score += Integer.parseInt(question.get(8));
+        }else {
+            score++;
+        }
     }
 
 }

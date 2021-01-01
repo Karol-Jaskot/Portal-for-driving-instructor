@@ -19,7 +19,7 @@ public class QuestionsManager {
     List<Question> questions;
 
 
-    public List<Question> getQuestionsPack(int howMany){
+    public List<Question> getQuestionsPackForLesson(int howMany){
         List<Question> randomQuestions = null;
         randomQuestions.addAll((Collection<? extends Question>) questionsRepo.findAll());
 

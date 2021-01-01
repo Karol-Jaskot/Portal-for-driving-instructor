@@ -33,6 +33,7 @@ public class GraphicView extends VerticalLayout {
     private Accordion accordion;
     private Button freeDayButton;
     private Button refreshButton;
+    private boolean buttonsFlag;
 
     public GraphicView(MainManager mainManager) {
         setSizeFull();
@@ -41,6 +42,7 @@ public class GraphicView extends VerticalLayout {
         this.mainManager = mainManager;
         calendarManager = mainManager.getCalendarManager();
 
+        buttonsFlag = false;
         createContent();
         createPage();
     }
@@ -72,10 +74,15 @@ public class GraphicView extends VerticalLayout {
             subTitle.setText("Proszę wybrać datę");
             choiceTime = valueDatePicker.getValue();
             checkDayOfWeek();
-            add(title,subTitle, dataLayout,message,accordion, refreshButton);
-            if(mainManager.isAdmin()){
-                add(freeDayButton);
+            if(buttonsFlag){
+                add(title,subTitle, dataLayout,message,accordion, refreshButton);
+                if(mainManager.isAdmin()){
+                    add(freeDayButton);
+                }
+            } else {
+                add(title,subTitle, dataLayout,message,accordion);
             }
+
         }else {
             message = new H1("Grafik dostępny tylko dla dla osób zalogowanych");
             add(title,message);
@@ -83,15 +90,24 @@ public class GraphicView extends VerticalLayout {
     }
 
     private void checkDayOfWeek() {
-        if (choiceTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        LocalDate lt = LocalDate.now();
+
+        if(choiceTime.isBefore(lt) ){
+            buttonsFlag = false;
+            setDayInfo(0);
+        } else if (choiceTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            buttonsFlag = false;
             setDayInfo(1);
         } else if(choiceTime.getDayOfWeek() == DayOfWeek.SATURDAY){
             if (calendarManager.getWorkingSaturday()) {
+                buttonsFlag = true;
                 setDayInfo(3);
             }else {
+                buttonsFlag = false;
                 setDayInfo(2);
             }
         }else {
+            buttonsFlag = true;
             setDayInfo(3);
         }
     }
@@ -100,7 +116,9 @@ public class GraphicView extends VerticalLayout {
         myDay = calendarManager.getMyDay(choiceTime);
         accordion = new Accordion();
 
-        if(i == 1){
+        if(i == 0){
+            message = new H1("Grafik niedostępny");
+        } else if(i == 1){
             message = new H1("Niedziela to dzień wolny od pracy");
         } else if(i==2){
             message = new H1("Instruktor ustawił soboty jako dni wolne od pracy");
@@ -151,6 +169,7 @@ public class GraphicView extends VerticalLayout {
             lesson.setBlocked(true);
             calendarManager.updateLesson(lesson);
         }
+        createPage();
     }
 
 }
