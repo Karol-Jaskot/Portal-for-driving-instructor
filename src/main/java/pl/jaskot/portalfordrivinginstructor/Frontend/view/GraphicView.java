@@ -91,25 +91,48 @@ public class GraphicView extends VerticalLayout {
 
     private void checkDayOfWeek() {
         LocalDate lt = LocalDate.now();
-
-        if(choiceTime.isBefore(lt) ){
-            buttonsFlag = false;
-            setDayInfo(0);
-        } else if (choiceTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
-            buttonsFlag = false;
-            setDayInfo(1);
-        } else if(choiceTime.getDayOfWeek() == DayOfWeek.SATURDAY){
-            if (calendarManager.getWorkingSaturday()) {
+        if(mainManager.isAdmin()){
+            if (choiceTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                buttonsFlag = false;
+                setDayInfo(1);
+            } else if(choiceTime.getDayOfWeek() == DayOfWeek.SATURDAY){
+                if (calendarManager.getWorkingSaturday()) {
+                    buttonsFlag = true;
+                    setDayInfo(3);
+                }else {
+                    buttonsFlag = false;
+                    setDayInfo(2);
+                }
+            }else {
                 buttonsFlag = true;
                 setDayInfo(3);
-            }else {
-                buttonsFlag = false;
-                setDayInfo(2);
             }
         }else {
-            buttonsFlag = true;
-            setDayInfo(3);
+            if (choiceTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                buttonsFlag = false;
+                setDayInfo(1);
+            } else if(choiceTime.getDayOfWeek() == DayOfWeek.SATURDAY){
+                if (calendarManager.getWorkingSaturday()) {
+                    buttonsFlag = true;
+                    setDayInfo(3);
+                }else {
+                    buttonsFlag = false;
+                    setDayInfo(2);
+                }
+            }else if(choiceTime.isBefore(lt) ){
+                buttonsFlag = false;
+                setDayInfo(0);
+            } else if(choiceTime.isAfter(lt.plusDays(14))) {
+                buttonsFlag = false;
+                setDayInfo(0);
+            }
+            else{
+                    buttonsFlag = true;
+                    setDayInfo(3);
+                }
+
         }
+
     }
 
     private void setDayInfo(int i) {
@@ -121,7 +144,11 @@ public class GraphicView extends VerticalLayout {
         } else if(i == 1){
             message = new H1("Niedziela to dzień wolny od pracy");
         } else if(i==2){
-            message = new H1("Instruktor ustawił soboty jako dni wolne od pracy");
+            if(mainManager.isAdmin()){
+                message = new H1("Soboty zostały ustawione jako dni wolne od pracy, przejdź do ustawień aby to zmienić");
+            } else {
+                message = new H1("Instruktor ustawił soboty jako dni wolne od pracy");
+            }
         } else if(i==3){
             subTitle.setText("Wybrana data: " +myDay.getMyDate()+"  Godzina rozpoczęcia: "+myDay.getStartHour()+"  Godzina zakończenia: "+myDay.getEndHour());
             message = new H1();

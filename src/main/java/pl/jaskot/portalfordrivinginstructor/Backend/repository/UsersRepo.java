@@ -6,4 +6,6 @@ import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
 
 @Repository
 public interface UsersRepo extends CrudRepository<User, Long> {
+
+    public User findByEmail(String email);
 }

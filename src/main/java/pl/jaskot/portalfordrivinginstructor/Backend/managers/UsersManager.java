@@ -88,4 +88,19 @@ public class UsersManager {
             return true;
         }
     }
+
+    public boolean checkUserData(String email, String password){
+        User user;
+        try{
+            user =  usersRepo.findByEmail(email);
+            if(user.getPassword().equals(password)){
+                mainUser = user;
+                return true;
+            }else {
+                return false;
+            }
+        } catch (Exception e){
+            return false;
+        }
+    }
 }

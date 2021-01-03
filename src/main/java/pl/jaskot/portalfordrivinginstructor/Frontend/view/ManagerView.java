@@ -15,6 +15,7 @@ import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.UsersManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
+import pl.jaskot.portalfordrivinginstructor.Frontend.components.LoginForm;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.RegistrationDialog;
 import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminQuestionareView;
 import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminSettingsView;
@@ -29,7 +30,7 @@ public class ManagerView extends VerticalLayout {
     private H1 title;
     private MainManager mainManager;
     private UsersManager usersManager;
-    private Button login, logout;
+    private Button login, logout, loginAminForTest;
     private Button registration;
     private Tab settings, users, questionares;
     private Tabs tabs;
@@ -55,13 +56,13 @@ public class ManagerView extends VerticalLayout {
             }
             add(logout);
         }else {
-            add(login);
+            add(login, loginAminForTest);
         }
     }
 
     private void createContent() {
         title = new H1("Zarządzanie aplikacją");
-
+        loginAminForTest = new Button("Zaloguj jako admin", event -> goLoginAdminForTest());
         login = new Button("Zaloguj", event -> goLogin());
         logout = new Button("Wyloguj", event -> goLogout());
         registration = new Button("Dodaj użytkownika",event -> goRegistration());
@@ -109,10 +110,8 @@ public class ManagerView extends VerticalLayout {
     }
 
     private void goLogin(){
-        User user = new User();
-        user.setAdmin(true);
-        usersManager.putMainUser(user);
-        UI.getCurrent().getPage().reload();
+        LoginForm loginForm = new LoginForm(mainManager);
+        loginForm.open();
     }
 
     private void goRegistration(){
@@ -122,6 +121,13 @@ public class ManagerView extends VerticalLayout {
 
     private void goLogout(){
         usersManager.dropMainUser();
+        UI.getCurrent().getPage().reload();
+    }
+
+    private void goLoginAdminForTest(){
+        User user = new User();
+        user.setAdmin(true);
+        usersManager.putMainUser(user);
         UI.getCurrent().getPage().reload();
     }
 }

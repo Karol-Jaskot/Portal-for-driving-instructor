@@ -7,7 +7,9 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
+import org.springframework.util.StopWatch;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.MyTimer;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Question;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionList;
 
@@ -30,7 +32,8 @@ public class TestView extends VerticalLayout {
     private boolean isUser, isExam;
     private MainManager mainManager;
     private int userQuest = 1;
-    private int examQuestNumber = 32, examQuestNumberNow = 0;
+    private int examQuestNumber = 32, examQuestNumberNow = 1;
+    private MyTimer myTimer;
 
     private H1 title;
 
@@ -77,7 +80,7 @@ public class TestView extends VerticalLayout {
 
     private void createExamView() {
         cleanPage();
-
+        myTimer.start();
         // pobranie pytania
         question = questions.get(examQuestNumberNow);
         examQuestNumberNow++;
@@ -92,14 +95,17 @@ public class TestView extends VerticalLayout {
                 answer= event.getValue();
             }
         });
-        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score);
+        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score+ "   "+myTimer.getValue());
         examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
+
     }
 
     private void resetSettings() throws FileNotFoundException {
         score = 0;
         examQuestNumber = 32;
+        examQuestNumberNow= 1;
         userQuest = 1;
+        myTimer.reset();
         if(isExam){
             startLesson.setText("Zacznij tryb nauki");
             questions = questionList.getQuestionsForExam();
@@ -110,6 +116,7 @@ public class TestView extends VerticalLayout {
     }
 
     private void createContent() throws FileNotFoundException {
+        myTimer = new MyTimer();
         questionList = new QuestionList();
         scoreLabel = new Label("Wynik: -");
 
@@ -133,15 +140,11 @@ public class TestView extends VerticalLayout {
                 resetSettings();
             } catch (FileNotFoundException e) {}
             title.setText("Testy online - egzamin");
-            createLessonView();
+            createExamView();
         }) ;
     }
 
     private void checkQuestion(){
-        if(radioGroup.isEmpty()){
-            return;
-        }
-
         boolean index = question.get(5).contains("A");
         if(index){
             if(question.get(2) == answer)
@@ -163,10 +166,21 @@ public class TestView extends VerticalLayout {
 
         userQuest++;
         if(isExam){
-            createExamView();
+            myTimer.stop();
+            if(examQuestNumberNow>examQuestNumber || myTimer.check()){
+                createExamResultView();
+            }else {
+                createExamView();
+            }
         } else {
             createLessonView();
         }
+    }
+
+    private void createExamResultView(){
+        cleanPage();
+        scoreLabel.setText(" Koniec egzaminu!   Numer pytania: "+userQuest+"    Wynik: "+score);
+        examView.add(scoreLabel);
     }
 
     private void addScore(){
@@ -176,5 +190,6 @@ public class TestView extends VerticalLayout {
             score++;
         }
     }
+
 
 }
