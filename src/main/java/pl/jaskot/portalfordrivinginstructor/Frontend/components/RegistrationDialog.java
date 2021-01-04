@@ -69,8 +69,9 @@ public class RegistrationDialog extends Dialog {
         user.setPhoneNumber(phoneNumber.getValue());
         user.setEmail(emailField.getValue());
         user.setPassword(passwordField.getValue());
-
-        mainManager.getUsersManager().addUser(user);
+        if(!mainManager.getUsersManager().addUser(user)){
+            MyMessage.pushInfoMessage("Podany email już istnieje w bazie");
+        }
     }
 
 }

@@ -51,10 +51,12 @@ public class GraphicButtonsLayout extends VerticalLayout{
         lesson.setReserved(reservationHour);
         if(reservationHour){
             if(!mainManager.isAdmin()){
+                //TODO zwiększyć ilość zarezerwowanych godzin
                 mainManager.getUsersManager().addMainUserReservation();
             }
         }
         else {
+            //TODO zmniejszyć ilość zarezerwowanych godzin
             if(mainManager.isAdmin()){
                 mainManager.getUsersManager().minusUserReservationLimit(lesson.getUserId());
             } else {

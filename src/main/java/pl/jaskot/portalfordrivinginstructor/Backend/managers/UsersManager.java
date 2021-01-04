@@ -3,11 +3,13 @@ package pl.jaskot.portalfordrivinginstructor.Backend.managers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jaskot.portalfordrivinginstructor.Backend.configuration.AppSettings;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.ExamScore;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
+import pl.jaskot.portalfordrivinginstructor.Backend.repository.ExamScoreRepo;
 import pl.jaskot.portalfordrivinginstructor.Backend.repository.UsersRepo;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsersManager {
@@ -15,14 +17,24 @@ public class UsersManager {
     @Autowired
     private UsersRepo usersRepo;
 
+    @Autowired
+    private ExamScoreRepo examScoreRepo;
+
     private User mainUser;
 
-    public UsersManager(UsersRepo usersRepo){
+    public UsersManager(UsersRepo usersRepo, ExamScoreRepo examScoreRepo){
         this.usersRepo = usersRepo;
+        this.examScoreRepo = examScoreRepo;
     }
 
-    public void addUser(User user) {
-        usersRepo.save(user);
+    public boolean addUser(User user) {
+        String myEmail = usersRepo.findByEmail(user.getEmail()).getEmail();
+        if(myEmail == null){
+            usersRepo.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<User> getUsers(){
@@ -102,5 +114,25 @@ public class UsersManager {
         } catch (Exception e){
             return false;
         }
+    }
+
+    public void saveExamScore(ExamScore examScore){
+        examScoreRepo.save(examScore);
+        List<ExamScore> scores;
+        try{
+            scores = mainUser.getExamScores();
+        }catch (Exception e){
+            scores = new ArrayList<ExamScore>();
+        }
+        if(examScore.isPassed()){
+            mainUser.setExamPassed(true);
+        }
+        scores.add(examScore);
+        mainUser.setExamScores(scores);
+        usersRepo.save(mainUser);
+    }
+
+    public List<ExamScore> getExamScore(){
+        return mainUser.getExamScores();
     }
 }

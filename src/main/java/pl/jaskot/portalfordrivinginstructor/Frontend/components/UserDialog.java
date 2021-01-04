@@ -54,8 +54,9 @@ public class UserDialog extends Dialog {
         user.setEmail(email.getValue());
         user.setPassword(passwordField.getValue());
         user.setPhoneNumber(phone.getValue());
-
-        mainManager.getUsersManager().addUser(user);
+        if(!mainManager.getUsersManager().addUser(user)){
+            MyMessage.pushInfoMessage("Podany email już istnieje w bazie");
+        }
     }
 
 }

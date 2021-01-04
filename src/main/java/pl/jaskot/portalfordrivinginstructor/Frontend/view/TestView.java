@@ -9,11 +9,13 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import org.springframework.util.StopWatch;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.ExamScore;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.MyTimer;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Question;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionList;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -34,6 +36,7 @@ public class TestView extends VerticalLayout {
     private int userQuest = 1;
     private int examQuestNumber = 32, examQuestNumberNow = 1;
     private MyTimer myTimer;
+    private H2 questionText;
 
     private H1 title;
 
@@ -54,16 +57,7 @@ public class TestView extends VerticalLayout {
         question = questions.get(random);
         questions.remove(random);
 
-        H2 questionText = new H2(question.get(1));
-
-        radioGroup = new RadioButtonGroup<>();
-        radioGroup.setItems(question.get(2), question.get(3), question.get(4));
-        radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
-        radioGroup.addValueChangeListener(event -> {
-            if (event.getValue() != null) {
-                answer= event.getValue();
-            }
-        });
+        createQuestion();
         scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score);
         examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
     }
@@ -85,8 +79,14 @@ public class TestView extends VerticalLayout {
         question = questions.get(examQuestNumberNow);
         examQuestNumberNow++;
 
-        // ustawienie pytań
-        H2 questionText = new H2(question.get(1));
+        createQuestion();
+        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score+ "   "+myTimer.getValue());
+        examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
+
+    }
+
+    private void createQuestion(){
+        questionText = new H2(question.get(1));
         radioGroup = new RadioButtonGroup<>();
         radioGroup.setItems(question.get(2), question.get(3), question.get(4));
         radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
@@ -95,9 +95,6 @@ public class TestView extends VerticalLayout {
                 answer= event.getValue();
             }
         });
-        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score+ "   "+myTimer.getValue());
-        examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
-
     }
 
     private void resetSettings() throws FileNotFoundException {
@@ -179,8 +176,21 @@ public class TestView extends VerticalLayout {
 
     private void createExamResultView(){
         cleanPage();
-        scoreLabel.setText(" Koniec egzaminu!   Numer pytania: "+userQuest+"    Wynik: "+score);
+        boolean passed = score > 67;
+        //TODO duży napis porażka/sukces
+        if(passed){
+            scoreLabel.setText(" Koniec egzaminu! Zakończony sukcesem!   Numer pytania: "+userQuest+"    Wynik: "+score);
+        }else {
+            scoreLabel.setText(" Koniec egzaminu! Zakończony niepowodzeniem!  Numer pytania: "+userQuest+"    Wynik: "+score);
+        }
         examView.add(scoreLabel);
+        if(mainManager.isActive()){
+            ExamScore examScore = new ExamScore();
+            examScore.setDate(LocalDateTime.now());
+            examScore.setScore(score);
+            examScore.setPassed(passed);
+            mainManager.getUsersManager().saveExamScore(examScore);
+        }
     }
 
     private void addScore(){

@@ -42,7 +42,7 @@ public class UsersListView extends VerticalLayout {
 
     private void createGrid(){
 
-
+        //TODO poprawić na wczytywanie z bazy
         User user = new User();
         user.setFirstName("Stefan");
         user.setLastName("Kornik");
