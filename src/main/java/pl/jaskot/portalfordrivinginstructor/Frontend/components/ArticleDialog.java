@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 
+import java.time.LocalDateTime;
+
 public class ArticleDialog extends Dialog {
 
     ArticlesManager articleManager;
@@ -48,8 +50,8 @@ public class ArticleDialog extends Dialog {
         Article article = new Article();
         article.setTitle(articleTitle.getValue());
         article.setMessage(articleDescription.getValue());
-        article.setAuthor(author);
-        article.setCreateTime(java.util.Calendar.getInstance().getTime());
+        //article.setAuthor(author);
+        article.setCreateTime(LocalDateTime.now());
         articleManager.addArticle(article);
     }
 

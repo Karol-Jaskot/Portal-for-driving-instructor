@@ -50,17 +50,17 @@ public class UsersManager {
     }
 
     public boolean addMainUserReservation(){
-        if(mainUser.getLessonLimit() >= AppSettings.getReservationLimit()){
+        if(mainUser.getLessonsLimit() >= AppSettings.getReservationLimit()){
             return false;
         }else {
-            mainUser.setLessonLimit(mainUser.getLessonLimit() + 1);
+            mainUser.setLessonsLimit(mainUser.getLessonsLimit() + 1);
             usersRepo.save(mainUser);
             return true;
         }
     }
 
     public void minusMainUserReservation(){
-        mainUser.setLessonLimit(mainUser.getLessonLimit() - 1);
+        mainUser.setLessonsLimit(mainUser.getLessonsLimit() - 1);
         usersRepo.save(mainUser);
     }
 
@@ -70,7 +70,7 @@ public class UsersManager {
 
     private void minusReservation(User user, Long id){
         if(user.getId() == id){
-            user.setLessonLimit(user.getLessonLimit() - 1);
+            user.setLessonsLimit(user.getLessonsLimit() - 1);
             usersRepo.save(user);
         }
     }

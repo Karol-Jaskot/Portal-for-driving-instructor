@@ -17,10 +17,12 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+    private boolean isFirstLogin;
     private boolean isAdmin = false;
-    private int lessonLimit;
+    private int lessonsLimit;
     private int lessons;
-    private boolean examPassed = false;
+    private boolean isExamPassed = false;
+    private boolean isFirstExam = false;
     @OneToMany
     private List<ExamScore> examScores;
 

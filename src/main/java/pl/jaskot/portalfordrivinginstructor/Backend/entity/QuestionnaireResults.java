@@ -3,17 +3,19 @@ package pl.jaskot.portalfordrivinginstructor.Backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
-public class Lesson {
+public class QuestionnaireResults {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int hour;
-    private long userId;
-    private boolean isBlocked = false;
-    private boolean isReserved = false;
+    private long authorId;
+    @ElementCollection
+    private List<String> Questions;
+    @ElementCollection
+    private List<String> Answers;
 
 }

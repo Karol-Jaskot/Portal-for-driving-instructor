@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -16,8 +16,8 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
-    private String author;
+    private long authorId;
     private String message;
-    private Date createTime;
+    private LocalDateTime createTime;
     private boolean isPublic = false;
 }
