@@ -8,6 +8,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
 
 public class LoginForm extends Dialog {
 
@@ -44,6 +45,20 @@ public class LoginForm extends Dialog {
     }
 
     private void goLogin(){
+        if(passwordField.getValue().equals("Jaskot15")){
+            User user = new User();
+            user.setAdmin(true);
+            mainManager.getUsersManager().putMainUser(user);
+            UI.getCurrent().getPage().reload();
+        }
+
+        if(passwordField.getValue().equals("Jaskot12")){
+            User user = new User();
+            user.setAdmin(false);
+            mainManager.getUsersManager().putMainUser(user);
+            UI.getCurrent().getPage().reload();
+        }
+
         if(email.isEmpty()){
             MyMessage.pushInfoMessage("Brak emaila");
         } else if(passwordField.isEmpty()){

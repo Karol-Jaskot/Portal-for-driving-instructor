@@ -28,13 +28,8 @@ public class UsersManager {
     }
 
     public boolean addUser(User user) {
-        String myEmail = usersRepo.findByEmail(user.getEmail()).getEmail();
-        if(myEmail == null){
-            usersRepo.save(user);
-            return true;
-        } else {
-            return false;
-        }
+        usersRepo.save(user);
+        return true;
     }
 
     public List<User> getUsers(){

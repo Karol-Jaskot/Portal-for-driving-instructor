@@ -26,6 +26,7 @@ public class MaterialsView extends VerticalLayout {
     private MaterialsManager materialsManager;
     private List<Material> materials;
     private Button addMaterialButton;
+    private static boolean isMaterials = true;
 
     public MaterialsView(MainManager mainManager) {
         this.mainManager = mainManager;
@@ -49,12 +50,23 @@ public class MaterialsView extends VerticalLayout {
 
 
     private void putSomeData() {
-        Material a1 = new Material();
-        a1.setTitle("Książka 1");
-        a1.setDescription("Treść i info");
-        a1.setLinkToFile("https://vaadin.com/components/vaadin-anchor");
-        a1.setPublic(true);
-        materialsManager.addMaterial(a1);
+        if(isMaterials){
+            Material a1 = new Material();
+            a1.setTitle("Książka 1");
+            a1.setDescription("Treść i info");
+            a1.setLinkToFile("https://vaadin.com/components/vaadin-anchor");
+            a1.setPublic(true);
+            materialsManager.addMaterial(a1);
+
+            Material a2 = new Material();
+            a2.setTitle("Książka 2");
+            a2.setDescription("Treść i info");
+            a2.setLinkToFile("https://vaadin.com/components/vaadin-anchor");
+            a2.setPublic(true);
+            materialsManager.addMaterial(a2);
+            isMaterials = false;
+        }
+
     }
 
 

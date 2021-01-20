@@ -23,6 +23,7 @@ public class ArticleView extends VerticalLayout{
     @Autowired
     private MainManager mainManager;
     private ArticlesManager articleManager;
+    private static boolean isMessage = true;
 
     private Accordion accordion;
     private List<Article> articleList;
@@ -48,14 +49,27 @@ public class ArticleView extends VerticalLayout{
     }
 
     private void putSomeData() {
-        Article a1 = new Article();
-        a1.setTitle("Wieści");
-        a1.setMessage("Treść i info");
-        //a1.setAuthor("Stefan");
-        a1.setPublic(true);
-        a1.setCreateTime(LocalDateTime.now());
+        if(isMessage){
+            Article a1 = new Article();
+            a1.setTitle("Wieści");
+            a1.setMessage("Treść i info");
+            //a1.setAuthor("Stefan");
+            a1.setPublic(true);
+            a1.setCreateTime(LocalDateTime.now());
 
-        articleManager.addArticle(a1);
+            articleManager.addArticle(a1);
+
+            Article a2 = new Article();
+            a2.setTitle("Wieści 2");
+            a2.setMessage("Treść i info");
+            //a1.setAuthor("Stefan");
+            a2.setPublic(true);
+            a2.setCreateTime(LocalDateTime.now());
+
+            articleManager.addArticle(a2);
+            isMessage = false;
+        }
+
     }
 
     private void setArticleToGrid() {

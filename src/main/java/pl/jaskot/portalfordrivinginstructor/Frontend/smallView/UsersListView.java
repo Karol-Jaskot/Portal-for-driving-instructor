@@ -18,6 +18,7 @@ public class UsersListView extends VerticalLayout {
     private List<User> users;
     private Grid<User> userGrid;
     private Button newUser, refresh;
+    private static boolean isEmpty = true;
 
     public UsersListView(MainManager mainManager){
         this.mainManager = mainManager;
@@ -42,21 +43,29 @@ public class UsersListView extends VerticalLayout {
 
     private void createGrid(){
 
-        //TODO poprawić na wczytywanie z bazy
-        User user = new User();
-        user.setFirstName("Stefan");
-        user.setLastName("Kornik");
-        user.setEmail("dziki@wp.pl");
-        user.setPhoneNumber("123");
+        if(isEmpty){
+            //TODO poprawić na wczytywanie z bazy
+            User user = new User();
+            user.setFirstName("Stefan");
+            user.setLastName("Kornik");
+            user.setEmail("stefan@wp.pl");
+            user.setPhoneNumber("123");
+            user.setPassword("Stefan15");
 
-        User user2 = new User();
-        user2.setFirstName("Stefan");
-        user2.setLastName("Kornik");
-        user2.setEmail("dziki@wp.pl");
-        user2.setPhoneNumber("123");
 
-        mainManager.getUsersManager().addUser(user);
-        mainManager.getUsersManager().addUser(user2);
+            User user2 = new User();
+            user2.setFirstName("Marcin");
+            user2.setLastName("Czwarty");
+            user2.setEmail("mmmcz@wp.pl");
+            user2.setPhoneNumber("123");
+
+            mainManager.getUsersManager().addUser(user);
+            mainManager.getUsersManager().addUser(user2);
+            isEmpty = false;
+        }
+
+
+
         users = mainManager.getUsersManager().getUsers();
 
         userGrid = new Grid<>();

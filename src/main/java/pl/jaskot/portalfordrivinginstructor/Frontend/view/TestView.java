@@ -80,7 +80,7 @@ public class TestView extends VerticalLayout {
         examQuestNumberNow++;
 
         createQuestion();
-        scoreLabel.setText("Numer pytania: "+userQuest+"    Wynik: "+score+ "   "+myTimer.getValue());
+        scoreLabel.setText("Numer pytania: "+userQuest+"    "+myTimer.getValue());
         examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
 
     }

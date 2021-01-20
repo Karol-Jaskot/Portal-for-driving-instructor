@@ -37,36 +37,20 @@ public class QuestionsForAll {
         questionsList.add("Który z aspektów jest dla Ciebie najważniejszy podczas przyszłej nauki jazdy?");
         List<String> ans2 = new ArrayList<>();
         ans2.add("Zdanie egzaminu teoretycznego oraz praktycznego za pierwszym razem");
-        ans2.add("Jak najlepsze zrozumienie zasad oraz przepisów ruchu drogowego");
-        ans2.add("");
-        ans2.add("");
+        ans2.add("Odp nr 2");
+        ans2.add("Odp nr 3");
+        ans2.add("Odp nr 4");
         answersList.add(ans2);
 
         // pytanie 3
-        questionsList.add("");
+        questionsList.add("Pytanie nr 3");
         List<String> ans3 = new ArrayList<>();
-        ans3.add("");
-        ans3.add("");
-        ans3.add("");
-        ans3.add("");
+        ans3.add("Odp nr 1");
+        ans3.add("Odp nr 2");
+        ans3.add("Odp nr 3");
+        ans3.add("Odp nr 4");
         answersList.add(ans3);
 
-        // pytanie 4
-        questionsList.add("");
-        List<String> ans4 = new ArrayList<>();
-        ans4.add("");
-        ans4.add("");
-        ans4.add("");
-        ans4.add("");
-        answersList.add(ans4);
 
-        // pytanie 5
-        questionsList.add("");
-        List<String> ans5 = new ArrayList<>();
-        ans5.add("");
-        ans5.add("");
-        ans5.add("");
-        ans5.add("");
-        answersList.add(ans5);
     }
 }

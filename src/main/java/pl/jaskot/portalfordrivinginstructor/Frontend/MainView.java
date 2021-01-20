@@ -108,8 +108,8 @@ public class MainView extends AppLayout {
     }
 
     Image createImage(){
-        Image image = new Image("https://www.fototapety24.net/img/wlasne_foto/d/fototapeta_wschod_slonca_nad_polem_lawendy.jpg","Foto");
-        image.setHeight("70px");
+        Image image = new Image("https://cdn.pixabay.com/photo/2016/04/01/12/16/car-1300629_960_720.png","Foto");
+        image.setHeight("140px");
         image.setWidthFull();
         return image;
     }

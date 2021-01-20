@@ -56,7 +56,8 @@ public class ManagerView extends VerticalLayout {
             }
             add(logout);
         }else {
-            add(login, loginAminForTest);
+            add(login);
+            //add(loginAminForTest);
         }
     }
 
