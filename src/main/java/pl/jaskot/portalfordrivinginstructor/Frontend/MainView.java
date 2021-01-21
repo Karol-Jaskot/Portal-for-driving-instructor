@@ -41,7 +41,7 @@ public class MainView extends AppLayout {
         addToNavbar(new DrawerToggle(),  new Label("Portal dla instruktora nauki jazdy"));
 
         createTabs();
-        addToDrawer(createImage() ,tabs);
+        addToDrawer(tabs);
     }
 
     private void createTabs() throws FileNotFoundException {
