@@ -4,6 +4,8 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -25,16 +27,21 @@ public class LoginForm extends Dialog {
         setCloseOnOutsideClick(false);
 
         createContent();
-        add(title, email, passwordField);
-        add(confirmButton,cancelButton);
+        createPageView();
+    }
+
+    private void createPageView() {
+        VerticalLayout layout = new VerticalLayout();
+        HorizontalLayout hLayout = new HorizontalLayout();
+        hLayout.add(confirmButton,cancelButton);
+        layout.add(title, email, passwordField,hLayout);
+        add(layout);
     }
 
     private void createContent() {
-
         title = new Label("Panel logowania");
         email = new EmailField("Email");
         passwordField = new PasswordField("Hasło");
-
 
         confirmButton = new Button("Zaloguj", event -> {
             goLogin();

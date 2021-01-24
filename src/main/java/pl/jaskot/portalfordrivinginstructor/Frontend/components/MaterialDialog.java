@@ -3,6 +3,9 @@ package pl.jaskot.portalfordrivinginstructor.Frontend.components;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ public class MaterialDialog extends Dialog {
     private TextField matAdres;
     private TextArea matDescription;
     private Checkbox isPublic;
+    private Label title;
 
     @Autowired
     private MaterialsManager materialsManager;
@@ -25,20 +29,27 @@ public class MaterialDialog extends Dialog {
         this.materialsManager = materialsManager;
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
-
         createContent();
-        add(matTitle,matDescription,matAdres, isPublic);
-        add(confirmButton,cancelButton);
+        createPageView();
+    }
+
+    private void createPageView() {
+        VerticalLayout layout = new VerticalLayout();
+        HorizontalLayout hLayout = new HorizontalLayout();
+        hLayout.add(confirmButton,cancelButton);
+        layout.add(title,matTitle,matDescription,matAdres, isPublic,hLayout);
+        add(layout);
     }
 
     private void createContent() {
+        title = new Label("Kreator nowego materiału");
         matTitle = new TextField("Tytuł");
         matDescription = new TextArea("Opis");
         matAdres = new TextField("Link do źródła");
 
         isPublic = new Checkbox();
         isPublic.setLabel("Dostępny publicznie");
-        isPublic.setValue(false);
+        isPublic.setValue(true);
 
         confirmButton = new Button("Zapisz", event -> {
             createMaterial();
@@ -56,6 +67,7 @@ public class MaterialDialog extends Dialog {
         a1.setLinkToFile(matAdres.getValue());
         a1.setPublic(isPublic.getValue());
         materialsManager.addMaterial(a1);
+        MyMessage.pushInfoMessage("Nowy materiał został utworzony!");
     }
 
 }

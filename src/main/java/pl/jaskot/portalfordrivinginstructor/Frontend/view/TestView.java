@@ -44,6 +44,7 @@ public class TestView extends VerticalLayout {
         setSizeFull();
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         addClassName("test-view");
+        this.mainManager = mainManager;
 
         isUser = mainManager.isActive();
         isExam = true;
@@ -80,7 +81,7 @@ public class TestView extends VerticalLayout {
         examQuestNumberNow++;
 
         createQuestion();
-        scoreLabel.setText("Numer pytania: "+userQuest+"    "+myTimer.getValue());
+        scoreLabel.setText("Numer pytania: "+userQuest+"/32    "+myTimer.getValue());
         examView.add(questionText,radioGroup,scoreLabel, nextQuestion);
 
     }
@@ -179,9 +180,9 @@ public class TestView extends VerticalLayout {
         boolean passed = score > 67;
         //TODO duży napis porażka/sukces
         if(passed){
-            scoreLabel.setText(" Koniec egzaminu! Zakończony sukcesem!   Numer pytania: "+userQuest+"    Wynik: "+score);
+            scoreLabel.setText(" Koniec egzaminu! Zakończony sukcesem!    Wynik: "+score);
         }else {
-            scoreLabel.setText(" Koniec egzaminu! Zakończony niepowodzeniem!  Numer pytania: "+userQuest+"    Wynik: "+score);
+            scoreLabel.setText(" Koniec egzaminu! Zakończony niepowodzeniem!     Wynik: "+score);
         }
         examView.add(scoreLabel);
         if(mainManager.isActive()){

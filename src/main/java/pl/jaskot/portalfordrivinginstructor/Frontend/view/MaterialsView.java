@@ -12,6 +12,7 @@ import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Material;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.MaterialsManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.MaterialDialog;
+import pl.jaskot.portalfordrivinginstructor.Frontend.components.MyMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -108,7 +109,9 @@ public class MaterialsView extends VerticalLayout {
         );
         if(mainManager.isAdmin()){
             thisMaterial.add(new Button("Usuń materiał",
-                    event -> { materialsManager.deleteMaterial(material); }));
+                    event -> { materialsManager.deleteMaterial(material);
+                        MyMessage.pushInfoMessage("Materiał został usunięty!");
+                    }));
         };
         accordion.add(material.getTitle(),  thisMaterial);
     }

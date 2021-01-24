@@ -11,6 +11,7 @@ import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
+import pl.jaskot.portalfordrivinginstructor.Frontend.components.MyMessage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -90,12 +91,14 @@ public class ArticleView extends VerticalLayout{
         thisArticle.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         thisArticle.add(
                 new Label(article.getMessage()),
-                new Label(article.getCreateTime().toString())
+                new Label(article.getFullDate())
                 //new Label(article.getAuthor())
         );
         if(mainManager.isAdmin()){
             thisArticle.add(new Button("Usuń wiadomość",
-                    event -> { articleManager.deleteArticle(article); }));
+                    event -> { articleManager.deleteArticle(article);
+                        MyMessage.pushInfoMessage("Wiadomość została usunięta!");
+                    }));
         };
         accordion.add(article.getTitle(),  thisArticle);
     }
