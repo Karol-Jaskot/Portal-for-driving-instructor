@@ -41,7 +41,7 @@ public class MainView extends AppLayout {
         addToNavbar(new DrawerToggle(),  new Label("Portal dla instruktora nauki jazdy"));
 
         createTabs();
-        addToDrawer(tabs);
+        addToDrawer(createImage(),tabs);
     }
 
     private void createTabs() throws FileNotFoundException {
@@ -107,9 +107,11 @@ public class MainView extends AppLayout {
         setContent(page1);
     }
 
+
     Image createImage(){
-        Image image = new Image("https://cdn.pixabay.com/photo/2016/04/01/12/16/car-1300629_960_720.png","Foto");
-        image.setHeight("140px");
+        Image image = new Image("frontend/photo/car-menu5.png"
+                ,"Foto");
+        image.setHeight("80px");
         image.setWidthFull();
         return image;
     }
