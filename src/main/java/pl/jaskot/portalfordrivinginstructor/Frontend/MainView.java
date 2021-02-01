@@ -45,7 +45,7 @@ public class MainView extends AppLayout {
     }
 
     private void createTabs() throws FileNotFoundException {
-        Tab tab1 = new Tab("Ogłoszenia");
+        Tab tab1 = new Tab(  "Ogłoszenia");
         Div page1 = new Div();
         page1.add(new ArticleView(mainManager));
 

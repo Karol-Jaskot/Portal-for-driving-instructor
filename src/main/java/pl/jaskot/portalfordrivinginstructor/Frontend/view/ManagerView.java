@@ -5,6 +5,8 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Page;
@@ -63,8 +65,8 @@ public class ManagerView extends VerticalLayout {
 
     private void createContent() {
         title = new H1("Zarządzanie aplikacją");
-        loginAminForTest = new Button("Zaloguj jako admin", event -> goLoginAdminForTest());
-        login = new Button("Zaloguj", event -> goLogin());
+        loginAminForTest = new Button("Zaloguj jako admin", new Icon(VaadinIcon.ACADEMY_CAP), event -> goLoginAdminForTest());
+        login = new Button("Zaloguj", new Icon(VaadinIcon.KEY), event -> goLogin());
         logout = new Button("Wyloguj", event -> goLogout());
         registration = new Button("Dodaj użytkownika",event -> goRegistration());
     }
