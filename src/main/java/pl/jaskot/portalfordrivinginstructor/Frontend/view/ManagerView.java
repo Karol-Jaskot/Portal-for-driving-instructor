@@ -21,6 +21,7 @@ import pl.jaskot.portalfordrivinginstructor.Frontend.components.LoginForm;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.RegistrationDialog;
 import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminQuestionareView;
 import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminSettingsView;
+import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.QResultForAdmin;
 import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.UsersListView;
 
 import java.util.HashMap;
@@ -85,7 +86,7 @@ public class ManagerView extends VerticalLayout {
 
          questionares = new Tab("Ankiety");
          page3 = new Div();
-        page3.add(new AdminQuestionareView(mainManager));
+        page3.add(new QResultForAdmin(mainManager));
         page3.setVisible(false);
 
         Map<Tab, Component> tabsToPages = new HashMap<>();

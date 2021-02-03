@@ -7,9 +7,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionnaireResults;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionsForAll;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionsForUsers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class QuestionnaireView extends VerticalLayout {
     private Button nextButton;
     private RadioButtonGroup<String> radioGroup;
     private H2 questionText;
+    private QuestionnaireResults questionnaireResults;
 
     private int questNumber = 0;
     private int lastNumber = 0;
     private List<String> questionsList;
     private List<List<String>> answersList;
+    private List<String> userAnswers;
     private List<String> answers;
 
     public QuestionnaireView(MainManager mainManager){
@@ -37,17 +41,12 @@ public class QuestionnaireView extends VerticalLayout {
         if(mainManager.isAdmin()){
             //admin
             questionText.setText("Wyniki ankiet dostępne są w zakładce ustawienia");
-        }else if(mainManager.isActive()) {
-            //zalogowany
-            QuestionsForUsers questionsForUsers = new QuestionsForUsers(mainManager);
-            questionsList = questionsForUsers.getQuestionsList();
-            answersList = questionsForUsers.getAnswersList();
-            lastNumber = questionsList.size();
         }else {
             //niezalogowany
             QuestionsForAll questionsForAll = new QuestionsForAll();
             questionsList = questionsForAll.getQuestionsList();
             answersList = questionsForAll.getAnswersList();
+            userAnswers = new ArrayList<>();
             lastNumber = questionsList.size();
         }
         createQuest();
@@ -59,6 +58,7 @@ public class QuestionnaireView extends VerticalLayout {
         questionText = new H2();
         nextButton = new Button("Dalej", event -> nextQuestion());
         radioGroup = new RadioButtonGroup<>();
+        questionnaireResults = new QuestionnaireResults();
     }
 
     private void createQuest() {
@@ -76,6 +76,10 @@ public class QuestionnaireView extends VerticalLayout {
 
                 add(questionText, radioGroup, nextButton);
             }else {
+                questionnaireResults.setQuestions(questionsList);
+                questionnaireResults.setAnswers(userAnswers);
+                questionnaireResults.setDateTime(LocalDateTime.now());
+                mainManager.getQuestionnaireResoultsManager().addQuestonsResoult(questionnaireResults);
                 questionText.setText("To już wszystkie pytania na tą chwilę. Dzięki Twoim odpowiedzią możemy lepiej dostosować ofertę nauki jazdy do potrzeb obecnych oraz przyszłych kursantów.");
                 add(questionText);
             }
@@ -88,11 +92,10 @@ public class QuestionnaireView extends VerticalLayout {
 
     private void nextQuestion(){
         if(radioGroup.isEmpty()){
-
         }else {
+            userAnswers.add(radioGroup.getValue());
             questNumber++;
             if(questNumber < lastNumber){
-
                 answers.add(radioGroup.getValue());
             }
             createQuest();

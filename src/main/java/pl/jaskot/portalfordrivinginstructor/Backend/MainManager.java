@@ -22,12 +22,16 @@ public class MainManager {
     @Autowired
     UsersManager usersManager;
 
-    public MainManager(ArticlesManager articleManager, QuestionsManager questionsManager, MaterialsManager materialsManager, UsersManager usersManager,CalendarManager calendarManager) {
+    @Autowired
+    QuestionnaireResoultsManager questionnaireResoultsManager;
+
+    public MainManager(ArticlesManager articleManager, QuestionsManager questionsManager, MaterialsManager materialsManager, UsersManager usersManager,CalendarManager calendarManager, QuestionnaireResoultsManager questionnaireResoultsManager) {
         this.articleManager = articleManager;
         this.questionsManager = questionsManager;
         this.materialsManager = materialsManager;
         this.usersManager = usersManager;
         this.calendarManager = calendarManager;
+        this.questionnaireResoultsManager = questionnaireResoultsManager;
     }
 
     public ArticlesManager getArticleManager() {
@@ -51,4 +55,8 @@ public class MainManager {
     }
 
     public Long getUserId(){ return usersManager.getMainUser().getId(); }
+
+    public QuestionnaireResoultsManager getQuestionnaireResoultsManager(){
+        return questionnaireResoultsManager;
+    }
 }

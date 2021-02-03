@@ -150,7 +150,7 @@ public class GraphicView extends VerticalLayout {
                 message = new H1("Instruktor ustawił soboty jako dni wolne od pracy");
             }
         } else if(i==3){
-            subTitle.setText("Wybrana data: " +myDay.getMyDate()+"  Godzina rozpoczęcia: "+myDay.getStartHour()+"  Godzina zakończenia: "+myDay.getEndHour());
+            subTitle.setText("Wybrana data: " +myDay.getMyDate());
             message = new H1();
             setHoursPage();
         }

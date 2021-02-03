@@ -52,7 +52,6 @@ public class UsersListView extends VerticalLayout {
             user.setPhoneNumber("123");
             user.setPassword("Stefan15");
 
-
             User user2 = new User();
             user2.setFirstName("Marcin");
             user2.setLastName("Czwarty");
@@ -63,8 +62,6 @@ public class UsersListView extends VerticalLayout {
             mainManager.getUsersManager().addUser(user2);
             isEmpty = false;
         }
-
-
 
         users = mainManager.getUsersManager().getUsers();
 
@@ -77,6 +74,7 @@ public class UsersListView extends VerticalLayout {
         userGrid.addColumn(User::getLastName).setHeader("Nazwisko");
         userGrid.addColumn(User::getEmail).setHeader("Email");
         userGrid.addColumn(User::getPhoneNumber).setHeader("Telefon");
+        userGrid.addColumn(User::isExamPassed).setHeader("Zaliczony egzamin");
 
         userGrid.addComponentColumn(item -> createRemoveButton(userGrid, item))
                 .setHeader("Usuwanie");

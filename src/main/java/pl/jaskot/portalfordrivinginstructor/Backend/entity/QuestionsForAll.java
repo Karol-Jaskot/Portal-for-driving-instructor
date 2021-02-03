@@ -37,18 +37,18 @@ public class QuestionsForAll {
         questionsList.add("Który z aspektów jest dla Ciebie najważniejszy podczas przyszłej nauki jazdy?");
         List<String> ans2 = new ArrayList<>();
         ans2.add("Zdanie egzaminu teoretycznego oraz praktycznego za pierwszym razem");
-        ans2.add("Odp nr 2");
-        ans2.add("Odp nr 3");
-        ans2.add("Odp nr 4");
+        ans2.add("Przyjemna i spokojna atmosfera podczas nauki ");
+        ans2.add("Czas do uzyskania prawa jazdy");
+        ans2.add("Zdobycie jak największego doświadczenia w kierowaniu pojazdem");
         answersList.add(ans2);
 
         // pytanie 3
-        questionsList.add("Pytanie nr 3");
+        questionsList.add("Dlaczego postanowiłeś skorzystać z oferty obecnego instruktora?");
         List<String> ans3 = new ArrayList<>();
-        ans3.add("Odp nr 1");
-        ans3.add("Odp nr 2");
-        ans3.add("Odp nr 3");
-        ans3.add("Odp nr 4");
+        ans3.add("Niewielka odległość od miejsca zamieszkania");
+        ans3.add("Niski koszt kursu");
+        ans3.add("Polecenie instruktora przez znajomych");
+        ans3.add("Pozytywne opinie w mediach społecznościowych");
         answersList.add(ans3);
 
 

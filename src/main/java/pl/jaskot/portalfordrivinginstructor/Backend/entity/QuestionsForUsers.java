@@ -57,22 +57,6 @@ public class QuestionsForUsers {
         ans3.add("");
         answersList.add(ans3);
 
-        // pytanie 4
-        questionsList.add("Pytanie 4");
-        List<String> ans4 = new ArrayList<>();
-        ans4.add("");
-        ans4.add("");
-        ans4.add("");
-        ans4.add("");
-        answersList.add(ans4);
 
-        // pytanie 5
-        questionsList.add("Pytanie 5");
-        List<String> ans5 = new ArrayList<>();
-        ans5.add("");
-        ans5.add("");
-        ans5.add("");
-        ans5.add("");
-        answersList.add(ans5);
     }
 }
