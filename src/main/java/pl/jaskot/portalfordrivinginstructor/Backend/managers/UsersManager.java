@@ -36,6 +36,10 @@ public class UsersManager {
         return (List<User>) usersRepo.findAll();
     }
 
+    public void updateUser(User user){
+        usersRepo.save(user);
+    }
+
     public void deleteUser(User user){
         usersRepo.delete(user);
     }

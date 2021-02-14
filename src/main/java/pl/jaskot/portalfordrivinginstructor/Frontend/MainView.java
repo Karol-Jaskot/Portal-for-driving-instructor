@@ -16,6 +16,8 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
+import pl.jaskot.portalfordrivinginstructor.Backend.configuration.TestData;
+import pl.jaskot.portalfordrivinginstructor.Frontend.components.NextPasswordDialog;
 import pl.jaskot.portalfordrivinginstructor.Frontend.view.*;
 
 import java.io.FileNotFoundException;
@@ -42,6 +44,19 @@ public class MainView extends AppLayout {
 
         createTabs();
         addToDrawer(createImage(),tabs);
+        TestData td = new TestData(mainManager);
+        checkPassword();
+    }
+
+    private void checkPassword() {
+        if(mainManager.isActive()){
+            if(!mainManager.isAdmin()){
+                if (mainManager.getUsersManager().getMainUser().isFirstLogin()){
+                    NextPasswordDialog nextPasswordDialog = new NextPasswordDialog(mainManager);
+                    nextPasswordDialog.open();
+                }
+            }
+        }
     }
 
     private void createTabs() throws FileNotFoundException {

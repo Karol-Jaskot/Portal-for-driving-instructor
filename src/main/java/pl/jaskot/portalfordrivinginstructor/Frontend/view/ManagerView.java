@@ -18,11 +18,9 @@ import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.UsersManager;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.ArticleDialog;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.LoginForm;
+import pl.jaskot.portalfordrivinginstructor.Frontend.components.NextPasswordDialog;
 import pl.jaskot.portalfordrivinginstructor.Frontend.components.RegistrationDialog;
-import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminQuestionareView;
-import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.AdminSettingsView;
-import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.QResultForAdmin;
-import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.UsersListView;
+import pl.jaskot.portalfordrivinginstructor.Frontend.smallView.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +54,8 @@ public class ManagerView extends VerticalLayout {
             if(mainManager.isAdmin()){
                 createAdminContent();
                 setAdminPage();
+            }else {
+                add(new UserSettingView(mainManager));
             }
             add(logout);
         }else {

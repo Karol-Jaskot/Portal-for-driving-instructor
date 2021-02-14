@@ -22,7 +22,7 @@ public class User {
     private int lessonsLimit;
     private int lessons;
     private boolean isExamPassed = false;
-    private boolean isFirstExam = false;
+    private boolean isFirstExam = true;
     @OneToMany
     private List<ExamScore> examScores;
 

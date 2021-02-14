@@ -169,15 +169,9 @@ public class GraphicView extends VerticalLayout {
                     panel.setEnabled(false);
                 }
             }else if(lesson.isReserved()){
-                if(lesson.getUserId() == mainManager.getUserId()) {
-                    // userHour
-                    panel = accordion.add(title + " - Zarezerwowana przez obecnego kursanta", new GraphicButtonsLayout(lesson,mainManager));
-                } else {
-                    // otherUserHour
-                    panel = accordion.add(title+" - Zarezerwowana przez innego kursanta", new GraphicButtonsLayout(lesson,mainManager));
-                    if(!mainManager.isAdmin()){
-                        panel.setEnabled(false);
-                    }
+                panel = accordion.add(title+" - Zarezerwowana", new GraphicButtonsLayout(lesson,mainManager));
+                if(!mainManager.isAdmin()){
+                    panel.setEnabled(false);
                 }
             } else {
                 // freeHour

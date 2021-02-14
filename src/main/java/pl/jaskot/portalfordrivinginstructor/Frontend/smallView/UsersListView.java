@@ -43,26 +43,6 @@ public class UsersListView extends VerticalLayout {
 
     private void createGrid(){
 
-        if(isEmpty){
-            //TODO poprawić na wczytywanie z bazy
-            User user = new User();
-            user.setFirstName("Stefan");
-            user.setLastName("Kornik");
-            user.setEmail("stefan@wp.pl");
-            user.setPhoneNumber("123");
-            user.setPassword("Stefan15");
-
-            User user2 = new User();
-            user2.setFirstName("Marcin");
-            user2.setLastName("Czwarty");
-            user2.setEmail("mmmcz@wp.pl");
-            user2.setPhoneNumber("123");
-
-            mainManager.getUsersManager().addUser(user);
-            mainManager.getUsersManager().addUser(user2);
-            isEmpty = false;
-        }
-
         users = mainManager.getUsersManager().getUsers();
 
         userGrid = new Grid<>();
