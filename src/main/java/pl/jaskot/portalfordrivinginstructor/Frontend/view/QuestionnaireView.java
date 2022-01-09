@@ -32,9 +32,7 @@ public class QuestionnaireView extends VerticalLayout {
 
     public QuestionnaireView(MainManager mainManager){
         this.mainManager = mainManager;
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        setSizeFull();
-        addClassName("questionnaire-view");
+        ViewsConfig.setLayoutConfig(this, "questionnaire-view");
         createContent();
 
         if(mainManager.isAdmin()){

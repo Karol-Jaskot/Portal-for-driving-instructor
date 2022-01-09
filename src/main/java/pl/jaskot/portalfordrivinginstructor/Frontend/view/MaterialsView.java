@@ -26,9 +26,7 @@ public class MaterialsView extends VerticalLayout {
     public MaterialsView(MainManager mainManager) {
         this.mainManager = mainManager;
         this.materialsManager = mainManager.getMaterialsManager();
-        setSizeFull();
-        setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        addClassName("materials-view");
+        ViewsConfig.setLayoutConfig(this, "materials-view");
 
         createContent();
         setMaterialsToGrid();

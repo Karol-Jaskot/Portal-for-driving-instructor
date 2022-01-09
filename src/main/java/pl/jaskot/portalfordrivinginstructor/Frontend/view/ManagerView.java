@@ -37,17 +37,10 @@ public class ManagerView extends VerticalLayout {
     private Tabs tabs;
     private Div page1, page2, page3, pages;
 
-
-
-    private ArticleDialog articleDialog;
-
     public ManagerView(MainManager mainManager) {
         this.mainManager = mainManager;
         this.usersManager = mainManager.getUsersManager();
-        setSizeFull();
-        setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        addClassName("manager-view");
-
+        ViewsConfig.setLayoutConfig(this, "manager-view");
         createContent();
         add(title);
         if(mainManager.isActive()){

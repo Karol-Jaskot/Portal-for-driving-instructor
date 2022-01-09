@@ -14,9 +14,7 @@ public class ContactView extends VerticalLayout {
                 + "Projekt zrealizowany został podczas roku akademickiego 2020/2021 w Państwowej Wyższej Szkołe Zawodowej  im. Witelona w Legnicy.";
 
     public ContactView() {
-        setSizeFull();
-        setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        addClassName("contact-view");
+        ViewsConfig.setLayoutConfig(this, "contact-view");
         add(
                 new H1(title),
                 new H2(info),

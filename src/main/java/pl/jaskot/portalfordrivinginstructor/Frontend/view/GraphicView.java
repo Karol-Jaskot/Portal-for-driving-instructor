@@ -34,9 +34,7 @@ public class GraphicView extends VerticalLayout {
     private boolean buttonsFlag;
 
     public GraphicView(MainManager mainManager) {
-        setSizeFull();
-        setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        addClassName("graphic-view");
+        ViewsConfig.setLayoutConfig(this, "graphic-view");
         this.mainManager = mainManager;
         calendarManager = mainManager.getCalendarManager();
 

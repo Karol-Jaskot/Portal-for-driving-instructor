@@ -41,9 +41,7 @@ public class TestView extends VerticalLayout {
     private H1 title;
 
     public TestView(MainManager mainManager) throws FileNotFoundException {
-        setSizeFull();
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        addClassName("test-view");
+        ViewsConfig.setLayoutConfig(this, "test-view");
         this.mainManager = mainManager;
 
         isUser = mainManager.isActive();
