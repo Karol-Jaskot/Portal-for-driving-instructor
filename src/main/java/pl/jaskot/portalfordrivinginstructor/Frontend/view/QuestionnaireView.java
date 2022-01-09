@@ -9,7 +9,6 @@ import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionnaireResults;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionsForAll;
-import pl.jaskot.portalfordrivinginstructor.Backend.entity.QuestionsForUsers;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -79,7 +78,7 @@ public class QuestionnaireView extends VerticalLayout {
                 questionnaireResults.setQuestions(questionsList);
                 questionnaireResults.setAnswers(userAnswers);
                 questionnaireResults.setDateTime(LocalDateTime.now());
-                mainManager.getQuestionnaireResoultsManager().addQuestonsResoult(questionnaireResults);
+                mainManager.getQuestionnaireResoultsManager().addQuestionsResult(questionnaireResults);
                 questionText.setText("To już wszystkie pytania na tą chwilę. Dzięki Twoim odpowiedzią możemy lepiej dostosować ofertę nauki jazdy do potrzeb obecnych oraz przyszłych kursantów.");
                 add(questionText);
             }

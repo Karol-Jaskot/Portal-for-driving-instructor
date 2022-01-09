@@ -1,46 +1,29 @@
 package pl.jaskot.portalfordrivinginstructor.Frontend.components;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
-import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.User;
-import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 
 public class RegistrationDialog extends Dialog {
 
-
     private MainManager mainManager;
 
-    private Button confirmButton;
-    private Button cancelButton;
-    private TextField firstName;
-    private TextField lastName;
-    private TextField phoneNumber;
+    private TextField firstName, lastName, phoneNumber;
     private EmailField emailField;
     private PasswordField passwordField;
-    private String author;
 
-
-    public RegistrationDialog (MainManager mainManager){
+    public RegistrationDialog(MainManager mainManager) {
         this.mainManager = mainManager;
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
-
         createContent();
-        add(firstName,lastName,phoneNumber, emailField, passwordField);
-        add(confirmButton,cancelButton);
     }
 
     private void createContent() {
-        author = "Admin";
-
         firstName = new TextField("Imie");
         lastName = new TextField("Nazwisko");
         phoneNumber = new TextField("Numer telefonu");
@@ -48,28 +31,27 @@ public class RegistrationDialog extends Dialog {
         emailField = new EmailField("Email");
         emailField.setErrorMessage("Niepoprawny adres email");
 
-        passwordField = new PasswordField();
-        passwordField.setLabel("Hasło");
+        passwordField = new PasswordField("Hasło");
 
-        confirmButton = new Button("Zapisz", event -> {
-            createUser();
-            close();
-        });
-        cancelButton = new Button("Anuluj", event -> {
-            close();
-        });
+        add(firstName, lastName, phoneNumber, emailField, passwordField,
+                new Button("Zapisz", event -> {
+                    createUser();
+                    close();
+                }), new Button("Anuluj", event -> {
+                    close();
+                }));
+
     }
 
     private void createUser() {
-        User user = new User();
-
-        user.setAdmin(false);
-        user.setFirstName(firstName.getValue());
-        user.setLastName(lastName.getValue());
-        user.setPhoneNumber(phoneNumber.getValue());
-        user.setEmail(emailField.getValue());
-        user.setPassword(passwordField.getValue());
-        if(!mainManager.getUsersManager().addUser(user)){
+        if (!mainManager.getUsersManager().addUser(User.builder()
+                .isAdmin(false)
+                .firstName(firstName.getValue())
+                .lastName(lastName.getValue())
+                .phoneNumber(phoneNumber.getValue())
+                .email(emailField.getValue())
+                .password(passwordField.getValue())
+                .build())) {
             MyMessage.pushInfoMessage("Podany email już istnieje w bazie");
         }
     }

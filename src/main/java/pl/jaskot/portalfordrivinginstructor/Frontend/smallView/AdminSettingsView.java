@@ -22,12 +22,12 @@ public class AdminSettingsView extends VerticalLayout {
     private void createContent() {
 
         addArticle = new Button("Dodaj wiadomość", event -> {
-            ArticleDialog articleDialog = new ArticleDialog(mainManager.getArticleManager());
-            articleDialog.open();});
+            new ArticleDialog(mainManager.getArticleManager()).open();
+        });
 
         addMaterial = new Button("Dodaj materiał", event -> {
-            MaterialDialog materialDialog = new MaterialDialog(mainManager.getMaterialsManager());
-            materialDialog.open();});
+            new MaterialDialog(mainManager.getMaterialsManager()).open();
+        });
     }
 
 }

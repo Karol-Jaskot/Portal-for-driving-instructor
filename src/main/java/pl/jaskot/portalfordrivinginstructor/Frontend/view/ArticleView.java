@@ -38,7 +38,6 @@ public class ArticleView extends VerticalLayout{
         setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         addClassName("article-view");
 
-        putSomeData();
         createContent();
         setArticleToGrid();
 
@@ -47,30 +46,6 @@ public class ArticleView extends VerticalLayout{
             add(addArticleButton);
         }
         add(accordion);
-    }
-
-    private void putSomeData() {
-        if(isMessage){
-            Article a1 = new Article();
-            a1.setTitle("Wieści");
-            a1.setMessage("Treść i info");
-            //a1.setAuthor("Stefan");
-            a1.setPublic(true);
-            a1.setCreateTime(LocalDateTime.now());
-
-            articleManager.addArticle(a1);
-
-            Article a2 = new Article();
-            a2.setTitle("Wieści 2");
-            a2.setMessage("Treść i info");
-            //a1.setAuthor("Stefan");
-            a2.setPublic(true);
-            a2.setCreateTime(LocalDateTime.now());
-
-            articleManager.addArticle(a2);
-            isMessage = false;
-        }
-
     }
 
     private void setArticleToGrid() {

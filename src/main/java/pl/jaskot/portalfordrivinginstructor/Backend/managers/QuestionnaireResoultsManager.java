@@ -17,11 +17,11 @@ public class QuestionnaireResoultsManager {
         this.questionnaireResultsRepo = questionnaireResultsRepo;
     }
 
-    public void addQuestonsResoult(QuestionnaireResults questionnaireResults){
+    public void addQuestionsResult(QuestionnaireResults questionnaireResults){
         this.questionnaireResultsRepo.save(questionnaireResults);
     }
 
-    public List<QuestionnaireResults> getQuestionnaireResoults(){
+    public List<QuestionnaireResults> getQuestionnaireResults(){
         return (List<QuestionnaireResults>) questionnaireResultsRepo.findAll();
     }
 }

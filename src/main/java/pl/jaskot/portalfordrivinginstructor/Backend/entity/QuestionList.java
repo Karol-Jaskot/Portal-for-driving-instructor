@@ -1,5 +1,8 @@
 package pl.jaskot.portalfordrivinginstructor.Backend.entity;
 
+import lombok.extern.java.Log;
+import pl.jaskot.portalfordrivinginstructor.Backend.configuration.FilesPaths;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,20 +10,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+@Log
 public class QuestionList {
 
     private static final String COMMA_DELIMITER = ";";
     private int basicQuestNumber = 20, bThree = 10, bTwo = 6, bOne =4;
     private int specialQuestNumber = 12, sThree = 6, sTwo = 4, sOne = 2;
-    private String starndardPath = "files/standardQuest.csv";
-
-    private String pathBasicOne = "files/basicOneQuest.csv";
-    private String pathBasicTwo = "files/basicTwoQuest.csv";
-    private String pathBasicThree = "files/basicThreeQuest.csv";
-
-    private String pathSpecialOne = "files/specialOneQuest.csv";
-    private String pathSpecialTwo = "files/specialTwoQuest.csv";
-    private String pathSpecialThree = "files/specialThreeQuest.csv";
 
     private List<List<String>> records, randomRecords, examQuestions, basicQuestions, specialQuestion;
 
@@ -53,7 +48,7 @@ public class QuestionList {
 
     public List<List<String>> getQuestions() throws FileNotFoundException{
         records = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(starndardPath));) {
+        try (Scanner scanner = new Scanner(new File(FilesPaths.getStandardPath()));) {
             while (scanner.hasNextLine()) {
                 records.add(getRecordFromLine(scanner.nextLine()));
             }
@@ -80,25 +75,25 @@ public class QuestionList {
         String path;
         int value;
         if(i == 1){
-            path = pathBasicOne;
+            path = FilesPaths.getPathBasicOne();
             value = bOne;
         } else if(i == 2){
-            path = pathBasicTwo;
+            path = FilesPaths.getPathBasicTwo();
             value = bTwo;
         } else if(i == 3){
-            path = pathBasicThree;
+            path = FilesPaths.getPathBasicThree();
             value = bThree;
         } else if(i == 4){
-            path = pathSpecialOne;
+            path = FilesPaths.getPathSpecialOne();
             value = sOne;
         } else if(i == 5){
-            path = pathSpecialTwo;
+            path = FilesPaths.getPathSpecialTwo();
             value = bTwo;
         } else if(i == 6){
-            path = pathSpecialThree;
+            path = FilesPaths.getPathSpecialThree();
             value = bThree;
         } else {
-            path = starndardPath;
+            path = FilesPaths.getStandardPath();
             value = 10;
         }
 
@@ -106,7 +101,9 @@ public class QuestionList {
             while (scanner.hasNextLine()) {
                 randomRecords.add(getRecordFromLine(scanner.nextLine()));
             }
-        }catch (Exception e){ }
+        }catch (Exception e){
+            log.warning(e.toString());
+        }
 
         Collections.shuffle(randomRecords);
 

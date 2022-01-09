@@ -101,9 +101,6 @@ public class ManagerView extends VerticalLayout {
             Component selectedPage = tabsToPages.get(tabs.getSelectedTab());
             selectedPage.setVisible(true);
         });
-
-
-
     }
 
     private void setAdminPage(){

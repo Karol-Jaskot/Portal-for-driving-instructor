@@ -10,70 +10,62 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.html.H2;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jaskot.portalfordrivinginstructor.Backend.entity.Article;
 import pl.jaskot.portalfordrivinginstructor.Backend.managers.ArticlesManager;
 
 import java.time.LocalDateTime;
 
+@Log
 public class ArticleDialog extends Dialog {
 
-    ArticlesManager articleManager;
-
-    private Label title;
-    private Button confirmButton;
-    private Button cancelButton;
+    private ArticlesManager articleManager;
     private TextField articleTitle;
     private TextArea articleDescription;
-    private String author;
     private Checkbox isPublic;
-
 
     public ArticleDialog (ArticlesManager articleManager){
         this.articleManager = articleManager;
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
         createContent();
-        createPageView();
-    }
-
-    private void createPageView() {
-        VerticalLayout layout = new VerticalLayout();
-        HorizontalLayout hLayout = new HorizontalLayout();
-        hLayout.add(confirmButton,cancelButton);
-        layout.add(title,articleTitle,articleDescription,isPublic,hLayout);
-        add(layout);
     }
 
     private void createContent() {
-        title = new Label("Kreator nowej wiadomości");
-        author = "Admin";
-
         articleTitle = new TextField("Tytuł:");
         articleDescription = new TextArea("Treść:");
-
-        isPublic = new Checkbox();
-        isPublic.setLabel("Dostępny publicznie");
+        isPublic = new Checkbox("Dostępny publicznie");
         isPublic.setValue(true);
 
-        confirmButton = new Button("Zapisz", event -> {
-            createArticle();
-            close();
-        });
-        cancelButton = new Button("Anuluj", event -> {
-            close();
-        });
+        HorizontalLayout hLayout = new HorizontalLayout();
+        hLayout.add(
+                new Button("Zapisz", event -> {
+                    createArticle();
+                    close();
+        }),
+                new Button("Anuluj", event -> {
+                    close();
+                }));
+
+        add(
+                new Label("Kreator nowej wiadomości"),
+                articleTitle,articleDescription,isPublic,hLayout);
     }
 
     private void createArticle() {
-        Article article = new Article();
-        article.setTitle(articleTitle.getValue());
-        article.setMessage(articleDescription.getValue());
-        //article.setAuthor(author);
-        article.setPublic(isPublic.getValue());
-        article.setCreateTime(LocalDateTime.now());
-        articleManager.addArticle(article);
-        MyMessage.pushInfoMessage("Nowe ogłoszenie zostało utworzone!");
+        try {
+            articleManager.addArticle(
+                    Article.builder()
+                            .title(articleTitle.getValue())
+                            .message(articleDescription.getValue())
+                            .isPublic(isPublic.getValue())
+                            .createTime(LocalDateTime.now())
+                            .build()
+            );
+            MyMessage.pushInfoMessage("Nowy artykuł został utworzony!");
+        }catch (Exception e){
+            log.warning(e.toString());
+        }
     }
-
 }

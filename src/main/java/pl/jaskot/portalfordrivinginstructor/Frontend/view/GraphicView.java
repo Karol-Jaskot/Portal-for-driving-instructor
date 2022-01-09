@@ -31,8 +31,6 @@ public class GraphicView extends VerticalLayout {
     private MyDay myDay;
     private LocalDate choiceTime;
     private Accordion accordion;
-    private Button freeDayButton;
-    private Button refreshButton;
     private boolean buttonsFlag;
 
     public GraphicView(MainManager mainManager) {
@@ -52,8 +50,6 @@ public class GraphicView extends VerticalLayout {
         message = new H1();
         subTitle = new Label();
         accordion = new Accordion();
-        refreshButton = new Button("Odśwież grafik",event -> createPage());
-        freeDayButton = new Button("Ustaw cały dzień wolny", event -> setFreeDay());
 
         valueDatePicker = new DatePicker();
         LocalDate nowTime = LocalDate.now();
@@ -75,9 +71,9 @@ public class GraphicView extends VerticalLayout {
             choiceTime = valueDatePicker.getValue();
             checkDayOfWeek();
             if(buttonsFlag){
-                add(title,subTitle, dataLayout,message,accordion, refreshButton);
+                add(title,subTitle, dataLayout,message,accordion, new Button("Odśwież grafik",event -> createPage()));
                 if(mainManager.isAdmin()){
-                    add(freeDayButton);
+                    add(new Button("Ustaw cały dzień wolny", event -> setFreeDay()));
                 }
             } else {
                 add(title,subTitle, dataLayout,message,accordion);

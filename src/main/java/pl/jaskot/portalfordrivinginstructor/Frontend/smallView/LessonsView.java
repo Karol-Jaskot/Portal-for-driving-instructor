@@ -13,26 +13,22 @@ public class LessonsView extends VerticalLayout {
     private Lesson lesson;
     private Checkbox checkbox;
 
-    public LessonsView(MainManager mainManager, Lesson lesson){
+    public LessonsView(MainManager mainManager, Lesson lesson) {
         this.mainManager = mainManager;
         this.calendarManager = mainManager.getCalendarManager();
         this.lesson = lesson;
         createContent();
     }
 
-    private void createContent(){
+    private void createContent() {
         checkbox = new Checkbox();
 
-        if(lesson.isBlocked() == false){
+        if (lesson.isBlocked() == false) {
             // free hour
             checkbox.setLabel("Rezerwacja danej godziny");
         } else {
             // close hour
-
         }
-
         add(checkbox);
     }
-
-
 }

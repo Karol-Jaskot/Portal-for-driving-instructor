@@ -7,18 +7,12 @@ import pl.jaskot.portalfordrivinginstructor.Backend.MainManager;
 public class AdminQuestionareView extends VerticalLayout {
 
     private MainManager mainManager;
-    private H1 title;
+    private final H1 title = new H1("Lista ankiet");
 
     public AdminQuestionareView(MainManager mainManager){
         this.mainManager = mainManager;
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        createContent();
         add(title);
     }
-
-    private void createContent() {
-        title = new H1("Lista ankiet");
-    }
-
 }
